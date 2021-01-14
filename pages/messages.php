@@ -10,7 +10,8 @@ var_dump($_SESSION['login']);
 $messages=new messages();
 if($messages->afficherMessage($_GET['id'])==true)
 {
-    $messages->setConversation($_GET['id']);
+    $messages->setidConversation($_GET['id']);
+    echo $messages->getidConversation();
     for ($i=0; isset($messages->allresult_messages[$i]); $i++){
         $login = $messages->allresult_messages[$i]['login'];
         $id = $messages->allresult_messages[$i]['id_utilisateur'];
@@ -38,7 +39,7 @@ if (isset($_POST['submit_message']))
     echo $_POST['message'] . "<br>";
     echo $_SESSION['id'] . "<br>";
     echo $_SESSION['login'] . "<br>";
-    echo $id_conversation . "<br>";
+    echo $messages->getConversation() . "<br>";
     echo $date;
 }
 ?>

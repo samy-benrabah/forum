@@ -40,16 +40,29 @@ class messages{
 
     public function ajouterMessage($titre, $message, $id_conversation, $id_utilisateur, $login, $date)
     {
-        $query = $this->pdo->prepare("INSERT INTO `messages`(`titre`, `message`, `id_conversation`, `id_utilisateur`, `login`, `date`) VALUES (':titre', ':message', ':id_conversation', ':id_utilisateur', ':login', ':date' ");
-        $query->execute(["titre"=>$titre, "message"=>$message, "id_conversation"=>$id_conversation, "id_utilisateur"=>$id_utilisateur, "login"=>$login, "date"=>$date]);
-    }   
+        $query = $this->pdo->prepare("INSERT INTO `messages`(`titre`, `message`, `id_conversation`, `id_utilisateur`, `login`, `date`) VALUES (:titre, :message, :id_conversation, :id_utilisateur, :login, :date_ajout)");
+        $query->execute(["titre"=>$titre, "message"=>$message, "id_conversation"=>$id_conversation, "id_utilisateur"=>$id_utilisateur, "login"=>$login, "date_ajout"=>$date]);
+    }
 
-    public function setConversation($id_conversation)
+    public function ajouterConversation($nom_conversation, $login, $id_topic)
+    {
+        $query = $this->pdo->prepare("INSERT INTO `conversations`(`nom_conversation`, `createur_conversation`, `id_topic`) VALUES (:nom_conversation, :login, :id_topic)");
+        $query->execute(["nom_conversation"=>$nom_conversation, "login"=>$login, "id_topic"=>$id_topic]);
+    }
+
+    public function ajouterTopic($nom_topic, $login, $access)
+    {
+        $query = $this->pdo->prepare("INSERT INTO `topic`(`nom_topic`, `createur_topic`, `access`) VALUES (:nom_topic, :login, :access)");
+        $query->execute(["nom_topic"=>$nom_topic, "login"=>$login, "access"=>$access]);
+    }
+
+
+    public function setidConversation($id_conversation)
     {
         $this->id_conversation=$id_conversation;
     }
 
-    public function getConversation()
+    public function getidConversation()
     {
         return $this->id_conversation;
     }
