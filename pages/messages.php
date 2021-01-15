@@ -1,8 +1,6 @@
 <?php
 session_start();
 require_once '../class/messages.php';
-require_once '../class/user.php';
-$messages= new messages();
 
 var_dump($_SESSION['id']);
 var_dump($_SESSION['login']);
@@ -11,13 +9,26 @@ $messages=new messages();
 if($messages->afficherMessage($_GET['id'])==true)
 {
     $messages->setidConversation($_GET['id']);
-    echo $messages->getidConversation();
     for ($i=0; isset($messages->allresult_messages[$i]); $i++){
         $login = $messages->allresult_messages[$i]['login'];
         $id = $messages->allresult_messages[$i]['id_utilisateur'];
+        $id_message=$messages->allresult_messages[$i]['id'];
         echo "auteur du message: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "<br>";
         echo $messages->allresult_messages[$i]['titre'] . "<br>";
         echo $messages->allresult_messages[$i]['message'] . "<br>";
+        echo "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='aime'>". $messages->afficherlike($id_message,$_SESSION['id']) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='aime pas'>" . $messages->afficherdislike($id_message) . "</form>";
+        if (isset($_POST["like=$id_message"]))
+        {
+            $like="1";
+            $messages->ajouterlike($id_message, $_SESSION['id']);
+            var_dump($id_message);
+            var_dump($_SESSION['id']);
+        }
+        if (isset($_POST["dislike=$id_message"]))
+        {
+            $messages->ajouterdislike($id_message, $_SESSION['id']);
+            echo "envoi dislike";
+        }
     }
 }
 ?>
