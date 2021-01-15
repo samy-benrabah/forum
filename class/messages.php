@@ -40,16 +40,70 @@ class messages{
 
     public function ajouterMessage($titre, $message, $id_conversation, $id_utilisateur, $login, $date)
     {
-        $query = $this->pdo->prepare("INSERT INTO `messages`(`titre`, `message`, `id_conversation`, `id_utilisateur`, `login`, `date`) VALUES (':titre', ':message', ':id_conversation', ':id_utilisateur', ':login', ':date' ");
-        $query->execute(["titre"=>$titre, "message"=>$message, "id_conversation"=>$id_conversation, "id_utilisateur"=>$id_utilisateur, "login"=>$login, "date"=>$date]);
-    }   
+        $query = $this->pdo->prepare("INSERT INTO `messages`(`titre`, `message`, `id_conversation`, `id_utilisateur`, `login`, `date`) VALUES (:titre, :message, :id_conversation, :id_utilisateur, :login, :date_ajout)");
+        $query->execute(["titre"=>$titre, "message"=>$message, "id_conversation"=>$id_conversation, "id_utilisateur"=>$id_utilisateur, "login"=>$login, "date_ajout"=>$date]);
+    }
 
-    public function setConversation($id_conversation)
+    public function ajouterConversation($nom_conversation, $login, $id_topic)
+    {
+        $query = $this->pdo->prepare("INSERT INTO `conversations`(`nom_conversation`, `createur_conversation`, `id_topic`) VALUES (:nom_conversation, :login, :id_topic)");
+        $query->execute(["nom_conversation"=>$nom_conversation, "login"=>$login, "id_topic"=>$id_topic]);
+    }
+
+    public function ajouterTopic($nom_topic, $login, $access)
+    {
+        $query = $this->pdo->prepare("INSERT INTO `topic`(`nom_topic`, `createur_topic`, `access`) VALUES (:nom_topic, :login, :access)");
+        $query->execute(["nom_topic"=>$nom_topic, "login"=>$login, "access"=>$access]);
+    }
+
+    public function ajouterlike($id_message, $id_utilisateur)
+    {
+        $query=$this->pdo->prepare("SELECT id FROM suivi_like WHERE id_utilisateur=:id_utilisateur AND id_message=:id_message");
+        $query->execute(["id_utilisateur"=>$id_utilisateur,"id_message"=>$id_message]);
+        $check_like=$query->fetchAll(PDO::FETCH_COLUMN);
+        var_dump($check_like);
+        if (empty($check_like)) {
+            $query = $this->pdo->prepare("INSERT INTO `suivi_like`(`id_message`,`id_utilisateur`,`like_send`) VALUES (:id_message, :id_utilisateur, :like_send)");
+            $query->execute(["id_message" => $id_message, "id_utilisateur" => $id_utilisateur, "like_send" => 1]);
+            return "like ajouté";
+        } elseif ($check_like) return "déjà voté";
+    }
+
+    public function ajouterdislike($id_message, $id_utilisateur)
+    {
+        $query=$this->pdo->prepare("SELECT id FROM suivi_like WHERE id_utilisateur=:id_utilisateur AND id_message=:id_message");
+        $query->execute(["id_utilisateur"=>$id_utilisateur,"id_message"=>$id_message]);
+        $check_like=$query->fetchAll(PDO::FETCH_COLUMN);
+        var_dump($check_like);
+        if (empty($check_like)) {
+            $query = $this->pdo->prepare("INSERT INTO `suivi_like`(`id_message`,`id_utilisateur`,`dislike_send`) VALUES (:id_message, :id_utilisateur, :dislike_send)");
+            $query->execute(["id_message" => $id_message, "id_utilisateur" => $id_utilisateur, "dislike_send" => 1]);
+        } else return "déjà voté";
+    }
+
+    public function afficherlike($id_message,$id_utilisateur)
+    {
+        $query = $this->pdo->prepare("SELECT COUNT(like_send) FROM `suivi_like` WHERE id_message=:id_message");
+        $query->execute(["id_message" => $id_message]);
+        $this->allresult_like = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $this->allresult_like[0]['COUNT(like_send)'];
+    }
+
+    public function afficherdislike($id_message)
+    {
+        $query=$this->pdo->prepare("SELECT COUNT(dislike_send) FROM `suivi_like` WHERE id_message=:id_message");
+        $query->execute(["id_message"=>$id_message]);
+        $this->allresult_dislike=$query->fetchAll(PDO::FETCH_ASSOC);
+        return $this->allresult_dislike[0]['COUNT(dislike_send)'];
+    }
+
+
+    public function setidConversation($id_conversation)
     {
         $this->id_conversation=$id_conversation;
     }
 
-    public function getConversation()
+    public function getidConversation()
     {
         return $this->id_conversation;
     }

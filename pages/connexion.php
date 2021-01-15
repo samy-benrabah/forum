@@ -4,6 +4,7 @@ require_once '../class/user.php';
 session_start();
 $user = new user();
 
+
 if (isset($_COOKIE['mail']))
 {
     echo "Vous êtes déjà connecté" . "<br>";
