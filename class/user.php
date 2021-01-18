@@ -1,19 +1,18 @@
 <?php
 class user
 {
-    protected $login= '';
-    protected $password= '';
-    protected $id='';
-    protected $email='';
+    protected $login = '';
+    protected $password = '';
+    protected $id = '';
+    protected $email = '';
     protected $status = '';
 
     public function __construct()
     {
-        $this->pdo = new PDO('mysql:dbname=forum;host=localhost',"root","");
+        $this->pdo = new PDO('mysql:dbname=forum;host=localhost', "root", "");
         $this->errors = array();
         $this->user_info = array();
     }
-
 
     public function register($login, $password, $email)
     {
@@ -24,18 +23,10 @@ class user
 
         if (empty(trim($login)) || empty(trim($password)) || empty(trim($email))) {
             //Vérifie si l'un des champs est vide
-            if (empty(trim($login))) {
-                $this->errors[] = "Merci de compléter le login";
-                //Si c'est le login => message erreur
-            }
-            if (empty(trim($password))) {
-               $this->errors[] = "Merci de compléter le password";
-                //Si c'est le login => message erreur
-            }
-            if (empty(trim($email))) {
-                $this->errors[] = "Merci de compléter l'email";
-                //Si c'est le login => message erreur
-            }
+
+            $this->errors[] = "Merci de remplir le formulaire";
+            //Si c'est le login => message erreur
+
         }
         $count_erreur_saisie = count($this->errors);
         // Si le tableau est vide cela signifie que nous pouvons commencer à vérifier les données et les insérer
@@ -60,10 +51,16 @@ class user
                 $this->login = $login;
                 $this->password = $password;
                 $this->email = $email;
-                $this->status= $status;
+                $this->status = $status;
                 return true;
-            } else return false;
-        } else return false;
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+
     }
 
     public function connect($login, $password)
@@ -83,8 +80,7 @@ class user
             }
         }
         $count_erreur_saisie = count($this->errors);
-        if ($count_erreur_saisie == 0)
-        {
+        if ($count_erreur_saisie == 0) {
             $requete = $this->pdo->prepare("SELECT * FROM utilisateurs WHERE login=:login");
             $requete->execute(['login' => $login]);
             $allresult = $requete->fetch(PDO::FETCH_ASSOC);
@@ -96,11 +92,20 @@ class user
                     $this->email = $allresult['email'];
                     $this->status = $allresult['status'];
                     return true;
-                } else $this->errors[] = "le mots de passe est incorrect";
+                } else {
+                    $this->errors[] = "le mots de passe est incorrect";
+                }
+
                 return false;
-            } else $this->errors[] =  "Le login n'existe pas";
+            } else {
+                $this->errors[] = "Le login n'existe pas";
+            }
+
             return false;
-        } else return false;
+        } else {
+            return false;
+        }
+
     }
 
     public function login($login, $password)
@@ -120,8 +125,7 @@ class user
             }
         }
         $count_erreur_saisie = count($this->errors);
-        if ($count_erreur_saisie == 0)
-        {
+        if ($count_erreur_saisie == 0) {
             $query = $this->pdo->prepare("SELECT password FROM utilisateurs WHERE id=:id");
             $query->execute(['id' => $this->id]);
             $result = $query->fetch(PDO::FETCH_ASSOC);
@@ -130,10 +134,9 @@ class user
             var_dump($cpassword);
             var_dump($this->login);
             //Recherche du mot de passe pour comparaison//
-            if (password_verify($password, $cpassword)==false)
-            {
-             $this->errors[] = "Le mot de passe est incorrect";
-             return false;
+            if (password_verify($password, $cpassword) == false) {
+                $this->errors[] = "Le mot de passe est incorrect";
+                return false;
             }
             $query = $this->pdo->prepare("SELECT login FROM utilisateurs WHERE login=:login");
             $query->execute(['login' => $login]);
@@ -146,12 +149,12 @@ class user
                     $update->bindParam("login", $login);
                     $update->bindParam("id", $this->id);
                     $update->execute();
-                    $this->login=$login;
+                    $this->login = $login;
                     return true;
-                } $this->errors[] = "Le login existe déjà";
+                }$this->errors[] = "Le login existe déjà";
                 return false;
-            } return false;
-        } return false;
+            }return false;
+        }return false;
     }
 
     public function password($password, $cpassword1, $cpassword2)
@@ -186,65 +189,80 @@ class user
                     $update->bindParam("password", $cpassword1);
                     $update->bindParam("id", $this->id);
                     $update->execute();
-                    $this->password=$password;
+                    $this->password = $password;
                     return true;
-                } else $this->errors[] = "Les deux nouveaux mots de passe ne sont pas identiques";
+                } else {
+                    $this->errors[] = "Les deux nouveaux mots de passe ne sont pas identiques";
+                }
+
                 return false;
-            } else $this->errors[] = "Le mot de passe est incorrect";
+            } else {
+                $this->errors[] = "Le mot de passe est incorrect";
+            }
+
             return false;
-        } return false;
+        }return false;
     }
 
-    public function afficherProfil($id){
-        if (isset($id)){
-            $query= $this->pdo -> prepare ("SELECT * FROM utilisateurs WHERE id=:id");
+    public function afficherProfil($id)
+    {
+        if (isset($id)) {
+            $query = $this->pdo->prepare("SELECT * FROM utilisateurs WHERE id=:id");
             $query->execute(['id' => $id]);
             $allresult = $query->fetch(PDO::FETCH_ASSOC);
-            $this->user_info[]=$allresult;
+            $this->user_info[] = $allresult;
             var_dump($this->user_info);
             return true;
+        } else {
+            return false;
         }
-        else return false;
+
     }
 
-    public function setId($id){
-        $this->id=$id;
+    public function setId($id)
+    {
+        $this->id = $id;
         return $this->id;
     }
 
-    public function setLogin($login){
-        $this->login=$login;
+    public function setLogin($login)
+    {
+        $this->login = $login;
         return $this->login;
     }
 
-    public function setStatus($status){
-        $this->status=$status;
+    public function setStatus($status)
+    {
+        $this->status = $status;
         return $this->status;
     }
 
-    public function getLogin(){
+    public function getLogin()
+    {
         return $this->login;
     }
 
-    public function getEmail(){
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getStatus(){
+    public function getStatus()
+    {
         return $this->status;
     }
 
     public function delete()
     {
         global $pdo;
-        $requete = $pdo -> prepare("DELETE FROM utilisateurs WHERE login=':login'");
-        $requete -> execute(['login'=>$this->login]);
+        $requete = $pdo->prepare("DELETE FROM utilisateurs WHERE login=':login'");
+        $requete->execute(['login' => $this->login]);
         session_destroy();
         echo "Votre compte à bien été supprimé";
     }
 }
-

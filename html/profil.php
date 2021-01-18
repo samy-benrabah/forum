@@ -1,13 +1,10 @@
 <?php
-require_once '../class/user.php';
+
+require '../class/user.php';
 session_start();
 $user = new user();
 
-if (isset($_COOKIE['mail'])) {
-    echo "Vous êtes déjà connecté" . "<br>";
-    echo "<button><a href='logout.php'>Se déconnecter</a></button>";
-} else {
-    ?>
+?>
 
 
 <!DOCTYPE html>
@@ -32,29 +29,7 @@ if (isset($_COOKIE['mail'])) {
 </header>
 <main>
 <div class="bloc">
-<h1>Connexion</h1>
-
-<?php
-if (isset($_POST['submit_connect'])) {
-        if ($user->connect($_POST['login'], $_POST['password']) == true) {
-            $_SESSION['login'] = $user->getLogin();
-            $_SESSION['id'] = $user->getId();
-            $_SESSION['status'] = $user->getStatus();
-            echo "Bonjour" . " " . $user->getLogin() . " " . "vous êtes connecté" . "<br>";
-            echo "Vous allez être automatiquement redirigé vers l'accueil, sinon cliquez " . "<a href='../index.php'>ici</a>";
-            header('Refresh: 3; url=../html/accueil.php');
-            if (isset($_POST['souvenir'])) {
-                setcookie('mail', $user->getEmail(), time() + 3600, '/');
-            }
-        } else {
-            foreach ($user->errors as $values) {
-                echo $values . "<br>";
-            }
-        }
-    }
-}
-?>
-
+<h1>Profil</h1>
 <div class="form">
 <form action="" method="post">
    <div class="login">
@@ -64,10 +39,15 @@ if (isset($_POST['submit_connect'])) {
     <div class="password">
     <label for="password"  >Password :</label>
     <input type="password" name="password">
+</div>
+   <div class="confirm-password">
+   <label for="password"  >Confirm Password :</label>
+    <input type="password" name="password">
+   </div>
 
     </div>
-    <div class="button">
-    <input name="submit_connect" class="button-in" type="submit" value="Connecter">
+    <div class="button-inscription">
+    <input name="submit_register"  type="submit" value="S'inscrire">
     </div>
 </form>
 </div>
@@ -91,4 +71,3 @@ if (isset($_POST['submit_connect'])) {
 </footer>
 </body>
 </html>
-

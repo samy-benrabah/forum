@@ -26,13 +26,13 @@ des developpeurs que tu sois plutot front , back ou full!! Tu es le bienvenue</p
     <section>
         <p>Copyright &copy All right reserved</p>
     <div class="footer-link-1">
-        <a href="">Facebook</a>
-        <a href="">GitHub</a>
-        <a href="">Twitter</a>
+        <a href="https://www.facebook.com/">Facebook</a>
+        <a href="https://www.github.com/">GitHub</a>
+        <a href="https://www.twitter.com/twitter.php">Twitter</a>
     </div>
     <div class="footer-link-2">
-    <a href="">Connexion</a>
-    <a href="">Inscription</a>
+    <a href="connexion.php">Connexion</a>
+    <a href="inscription.php">Inscription</a>
     </div>
 
     </section>
