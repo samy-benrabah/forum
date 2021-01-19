@@ -24,9 +24,17 @@ class user
         if (empty(trim($login)) || empty(trim($password)) || empty(trim($email))) {
             //Vérifie si l'un des champs est vide
 
-            $this->errors[] = "Merci de remplir le formulaire";
+            $this->errors[] = "Merci de completer le login";
             //Si c'est le login => message erreur
 
+            if (empty(trim($password))) {
+                $this->errors[] = "Merci de completer le password";
+                //Si c'est le login => message erreur
+            }
+            if (empty(trim($email))) {
+                $this->errors[] = "Merci de completer l'email";
+                //Si c'est le login => message erreur
+            }
         }
         $count_erreur_saisie = count($this->errors);
         // Si le tableau est vide cela signifie que nous pouvons commencer à vérifier les données et les insérer
@@ -35,13 +43,13 @@ class user
             $requete->execute(['login' => $login]);
             $result_login = $requete->fetchColumn();
             if ($result_login != false) {
-                $this->errors[] = "Le login existe déjà";
+                $this->errors[] = "Le login existe deja";
             }
             $requete = $this->pdo->prepare("SELECT id FROM utilisateurs WHERE email = :email");
             $requete->execute(['email' => $email]);
             $result_email = $requete->fetchColumn();
             if ($result_email != false) {
-                $this->errors[] = "Il existe déjà un compte associé à cet email";
+                $this->errors[] = "Email deja existant ";
             }
             $count_doublons = (count($this->errors));
             if ($count_doublons == 0) {
@@ -71,11 +79,11 @@ class user
         if (empty(trim($login)) || empty(trim($password))) {
             //Vérifie si l'un des champs est vide
             if (empty(trim($login))) {
-                $this->errors[] = "Merci de compléter le login";
+                $this->errors[] = "Merci de completer le login";
                 //Si c'est le login => message erreur
             }
             if (empty(trim($password))) {
-                $this->errors[] = "Merci de compléter le password";
+                $this->errors[] = "Merci de completer le password";
                 //Si c'est le login => message erreur
             }
         }
@@ -93,7 +101,7 @@ class user
                     $this->status = $allresult['status'];
                     return true;
                 } else {
-                    $this->errors[] = "le mots de passe est incorrect";
+                    $this->errors[] = "Le mots de passe est incorrect";
                 }
 
                 return false;
@@ -120,7 +128,7 @@ class user
                 //Si c'est le login => message erreur
             }
             if (empty(trim($password))) {
-                $this->errors[] = "Merci de compléter le password";
+                $this->errors[] = "Merci de completer le password";
                 //Si c'est le login => message erreur
             }
         }

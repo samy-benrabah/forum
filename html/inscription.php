@@ -8,7 +8,7 @@ $user = new user();
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,32 +28,10 @@ $user = new user();
     </form>
 </header>
 <main>
+    <div class="full-bloc">
 <div class="bloc">
 <h1>Inscription</h1>
-<?php
-if (isset($_POST['submit_register'])) {
 
-    if ($user->register($_POST['login'], $_POST['password'], $_POST['email']) == true) {
-        echo "Bonjour, votre profil à bien été crée" . "<br>";
-        echo "Votre login :" . " " . $user->getLogin() . "<br>";
-        echo "Votre email :" . " " . $user->getEmail() . "<br>";
-        echo "Vous allez être redirigé vers la page de connexion";
-        //header("Refresh: 3;url=connexion.php");
-    } else {
-        ?>
-
-        <div class=error_message>
-        <?php
-foreach ($user->errors as $values) {
-            echo $values . "<br>";
-        }
-        ?>
-        </div>
-
-   <?php }
-
-}
-?>
 
 <div class="form">
 <form action="" method="post">
@@ -75,6 +53,34 @@ foreach ($user->errors as $values) {
     <input name="submit_register"  type="submit" value="S'inscrire">
     </div>
 </form>
+</div>
+
+<?php
+if (isset($_POST['submit_register'])) {
+
+    if ($user->register($_POST['login'], $_POST['password'], $_POST['email']) == true) {?>
+       <div class="bloc_error">
+<?php
+echo "Bonjour, votre profil à bien ete cree" . "<br>";
+        echo "Votre login :" . " " . $user->getLogin() . "<br>";
+        echo "Votre email :" . " " . $user->getEmail() . "<br>";
+        echo "Vous allez etre redirige vers la page de connexion";
+        header("Refresh: 6;url=connexion.php");
+    } else {
+        ?>
+
+        <div class=error_message>
+        <?php
+foreach ($user->errors as $values) {
+            echo $values . "<br>";
+        }
+        ?>
+        </div>
+
+   <?php }
+
+}
+?>
 </div>
 </div>
 </main>

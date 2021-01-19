@@ -4,7 +4,7 @@ session_start();
 $user = new user();
 
 if (isset($_COOKIE['mail'])) {
-    echo "Vous êtes déjà connecté" . "<br>";
+    echo "Vous etes deja connecte" . "<br>";
     echo "<button><a href='logout.php'>Se déconnecter</a></button>";
 } else {
     ?>
@@ -31,30 +31,9 @@ if (isset($_COOKIE['mail'])) {
     </form>
 </header>
 <main>
+<div class="full-bloc">
 <div class="bloc">
 <h1>Connexion</h1>
-
-<?php
-if (isset($_POST['submit_connect'])) {
-        if ($user->connect($_POST['login'], $_POST['password']) == true) {
-            $_SESSION['login'] = $user->getLogin();
-            $_SESSION['id'] = $user->getId();
-            $_SESSION['status'] = $user->getStatus();
-            echo "Bonjour" . " " . $user->getLogin() . " " . "vous êtes connecté" . "<br>";
-            echo "Vous allez être automatiquement redirigé vers l'accueil, sinon cliquez " . "<a href='../index.php'>ici</a>";
-            header('Refresh: 3; url=../html/accueil.php');
-            if (isset($_POST['souvenir'])) {
-                setcookie('mail', $user->getEmail(), time() + 3600, '/');
-            }
-        } else {
-            foreach ($user->errors as $values) {
-                echo $values . "<br>";
-            }
-        }
-    }
-}
-?>
-
 <div class="form">
 <form action="" method="post">
    <div class="login">
@@ -71,6 +50,32 @@ if (isset($_POST['submit_connect'])) {
     </div>
 </form>
 </div>
+</div>
+<?php
+if (isset($_POST['submit_connect'])) {?>
+<div class="bloc_error">
+    <?php
+if ($user->connect($_POST['login'], $_POST['password']) == true) {
+        $_SESSION['login'] = $user->getLogin();
+        $_SESSION['id'] = $user->getId();
+        $_SESSION['status'] = $user->getStatus();
+        echo "Bonjour" . " " . $user->getLogin() . " " . "vous etes connecte" . "<br>";
+        echo "Vous allez etre automatiquement redirige vers l'accueil patientez quelques secondes, sinon cliquez " . "<a href='../index.php'>ici</a>";
+        header('Refresh: 6; url=../html/accueil.php');
+        if (isset($_POST['souvenir'])) {
+            setcookie('mail', $user->getEmail(), time() + 3600, '/');
+        }
+    } else {?>
+         <div class=error_message>
+             <?php
+foreach ($user->errors as $values) {
+        echo $values . "<br>";
+    }?>
+            </div>
+      <?php }
+    }
+}
+?>
 </div>
 </main>
 <footer>

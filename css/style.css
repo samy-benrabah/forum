@@ -120,6 +120,14 @@ main {
     justify-content: space-between;
 }
 
+.full-bloc {
+    margin-left: 30%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+}
+
 .bloc {
     height: 400px;
     width: 300px;
@@ -130,6 +138,13 @@ main {
 
 .bloc:hover {
     box-shadow: -1px -1px 12px 15px rgba(31, 209, 31, 1);
+}
+
+.bloc_error {
+    height: 150px;
+    width: 350px;
+    border-radius: 1em;
+    font-size: 30px;
 }
 
 .error_message {
@@ -275,7 +290,7 @@ main input[type=submit]:hover {
 }
 
 .table {
-    overflow: scroll;
+    overflow-y: scroll;
     height: 15vw;
 }
 

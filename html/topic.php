@@ -49,7 +49,7 @@
 
 <form action="" method="get">
 <div class="button-topic">
-    <input class="button-topic" type="button" value="Ajouter">
+    <input class="button-topic" type="submit" value="Ajouter">
     </div>
     </form>
     </div>
@@ -66,7 +66,7 @@
 
 <form action="" method="get">
 <div class="button-topic">
-    <input class="button-topic" type="button" value="Ajouter">
+    <input class="button-topic" type="submit" value="Ajouter">
     </div>
     </form>
     </div>
