@@ -16,18 +16,22 @@ if($messages->afficherMessage($_GET['id'])==true)
         echo "auteur du message: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "<br>";
         echo $messages->allresult_messages[$i]['titre'] . "<br>";
         echo $messages->allresult_messages[$i]['message'] . "<br>";
-        echo "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='aime'>". $messages->afficherlike($id_message,$_SESSION['id']) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='aime pas'>" . $messages->afficherdislike($id_message) . "</form>";
+        echo "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='aime'>". $messages->afficherlike($id_message) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='aime pas'>" . $messages->afficherdislike($id_message) . "</form>";
         if (isset($_POST["like=$id_message"]))
         {
-            $like="1";
-            $messages->ajouterlike($id_message, $_SESSION['id']);
-            var_dump($id_message);
-            var_dump($_SESSION['id']);
+            if ($messages->ajouterlike($id_message, $_SESSION['id'])==true)
+            {
+                echo "like ajouté";
+            }
+            else echo "déjà voté";
         }
         if (isset($_POST["dislike=$id_message"]))
         {
-            $messages->ajouterdislike($id_message, $_SESSION['id']);
-            echo "envoi dislike";
+            if ($messages->ajouterdislike($id_message, $_SESSION['id'])==true)
+            {
+                echo "dislike ajouté";
+            }
+            else echo "déjà voté";
         }
     }
 }

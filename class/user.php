@@ -201,10 +201,18 @@ class user
             $query->execute(['id' => $id]);
             $allresult = $query->fetch(PDO::FETCH_ASSOC);
             $this->user_info[]=$allresult;
-            var_dump($this->user_info);
             return true;
         }
         else return false;
+    }
+
+    public function nbmessages($id_utilisateur)
+    {
+        $query= $this->pdo -> prepare("SELECT COUNT(id) FROM messages WHERE id_utilisateur=:id_utilisateur");
+        $query->execute(['id_utilisateur'=>$id_utilisateur]);
+        $this->allresult_mess = $query->fetch(PDO::FETCH_ASSOC);
+        return $this->allresult_mess['COUNT(id)'];
+
     }
 
     public function setId($id){

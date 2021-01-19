@@ -6,16 +6,13 @@ require_once '../class/admin.php';
 $user = new user();
 $admin = new admin();
 
-var_dump($_GET['id']);
-var_dump($_SESSION['status']);
-var_dump($_SESSION['login']);
-
 if($user->afficherProfil($_GET['id'])==true)
 {
     echo "<div>" . "Login: " . $user->user_info[0]['login'] . "<br>";
-    echo "Email: " . $user->user_info[0]['email'] . "<br>";
-    echo "Statut :" . $user->user_info[0]['status'] . "<br>";
-    echo "Date d'inscritpion :" . $user->user_info[0]['date_inscription'] . "<br>" . "</div>";
+    echo "Email : " . $user->user_info[0]['email'] . "<br>";
+    echo "Statut : " . $user->user_info[0]['status'] . "<br>";
+    echo "Date d'inscription : " . $user->user_info[0]['date_inscription'] . "<br>" . "</div>";
+    echo "Nombre de messages envoyés : " . $user->nbmessages($_SESSION['id']) . "<br>";
 };
 
 if ($_SESSION['status']=='admin')
