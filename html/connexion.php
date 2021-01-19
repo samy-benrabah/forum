@@ -1,8 +1,14 @@
 <?php
-session_start();
 require_once '../class/user.php';
-$user=new user()
-?>
+session_start();
+$user = new user();
+
+if (isset($_COOKIE['mail'])) {
+    echo "Vous etes deja connecte" . "<br>";
+    echo "<button><a href='logout.php'>Se déconnecter</a></button>";
+} else {
+    ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -25,41 +31,11 @@ $user=new user()
     </form>
 </header>
 <main>
-<?php
-if (isset($_COOKIE['mail']))
-{
-echo "Vous êtes déjà connecté" . "<br>";
-echo "<button><a href='logout.php'>Se déconnecter</a></button>";
-}
-else
-{
-?>
+<div class="full-bloc">
 <div class="bloc">
 <h1>Connexion</h1>
 <div class="form">
 <form action="" method="post">
-    <?php
-    if (isset($_POST['submit_connect']))
-    {
-        if ($user -> connect($_POST['login'], $_POST['password'])==true) {
-            $_SESSION['login'] = $user->getLogin();
-            $_SESSION['id'] = $user->getId();
-            $_SESSION['status'] = $user->getStatus();
-            echo "Bonjour" . " " . $user->getLogin() . " " . "vous êtes connecté" . "<br>";
-            echo "Vous allez être automatiquement redirigé vers l'accueil, sinon cliquez " . "<a href='../index.php'>ici</a>";
-            //header('Refresh: 3; url=../index.php');
-            if (isset($_POST['souvenir'])) {
-                setcookie('mail', $user->getEmail(), time() + 3600, '/');
-            }
-        } else
-        {
-            foreach ($user->errors as $values){
-                echo $values . "<br>";
-            }
-        }
-    }
-    }
-    ?>
    <div class="login">
    <label for="login">Login : </label>
     <input type="text" name="login">
@@ -70,13 +46,37 @@ else
 
     </div>
     <div class="button">
-    <input class="button-in" type="submit" name="submit_connect" value="Connecter">
+    <input name="submit_connect" class="button-in" type="submit" value="Connecter">
     </div>
 </form>
 </div>
-
 </div>
-
+<?php
+if (isset($_POST['submit_connect'])) {?>
+<div class="bloc_error">
+    <?php
+if ($user->connect($_POST['login'], $_POST['password']) == true) {
+        $_SESSION['login'] = $user->getLogin();
+        $_SESSION['id'] = $user->getId();
+        $_SESSION['status'] = $user->getStatus();
+        echo "Bonjour" . " " . $user->getLogin() . " " . "vous etes connecte" . "<br>";
+        echo "Vous allez etre automatiquement redirige vers l'accueil patientez quelques secondes, sinon cliquez " . "<a href='../index.php'>ici</a>";
+        header('Refresh: 6; url=../html/accueil.php');
+        if (isset($_POST['souvenir'])) {
+            setcookie('mail', $user->getEmail(), time() + 3600, '/');
+        }
+    } else {?>
+         <div class=error_message>
+             <?php
+foreach ($user->errors as $values) {
+        echo $values . "<br>";
+    }?>
+            </div>
+      <?php }
+    }
+}
+?>
+</div>
 </main>
 <footer>
     <section>
@@ -96,3 +96,4 @@ else
 </footer>
 </body>
 </html>
+

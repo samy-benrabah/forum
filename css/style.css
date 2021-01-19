@@ -120,19 +120,36 @@ main {
     justify-content: space-between;
 }
 
+.full-bloc {
+    margin-left: 30%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+}
+
 .bloc {
-    height: 500px;
-    width: 350px;
+    height: 400px;
+    width: 300px;
     transition: 0.5s;
     color: white;
     border-radius: 1em;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 20px;
 }
 
 .bloc:hover {
     box-shadow: -1px -1px 12px 15px rgba(31, 209, 31, 1);
+}
+
+.bloc_error {
+    height: 150px;
+    width: 350px;
+    border-radius: 1em;
+    font-size: 30px;
+}
+
+.error_message {
+    color: red;
+    font-size: 25px;
 }
 
 .form {
@@ -173,6 +190,22 @@ main input[type=password]:hover {
     border-bottom: 2px solid rgb(94, 94, 252);
 }
 
+main input[type=email] {
+    place-self: center;
+    background: black;
+    border: none;
+    color: white;
+    transition: 0.3s;
+}
+
+main input[type=email]:hover {
+    border-bottom: 2px solid rgb(94, 94, 252);
+}
+
+main p {
+    font-size: 30px;
+}
+
 .login {
     display: flex;
     flex-direction: row;
@@ -200,6 +233,7 @@ main input[type=password]:hover {
     flex-direction: row;
     margin-top: 2em;
     font-size: 20px;
+    outline: none;
 }
 
 .button {
@@ -228,8 +262,8 @@ main input[type=password]:hover {
 
 main input[type=submit] {
     border-radius: 1em;
-    height: 2.5vw;
-    width: 8vw;
+    height: 35px;
+    width: 100px;
     background-color: rgb(255, 22, 22);
     transition: 0.5s;
     outline: none;
@@ -256,7 +290,7 @@ main input[type=submit]:hover {
 }
 
 .table {
-    overflow: scroll;
+    overflow-y: scroll;
     height: 15vw;
 }
 
@@ -265,10 +299,6 @@ main input[type=submit]:hover {
     width: 350px;
     border: solid 2px greenyellow;
     border-radius: 1em;
-}
-
-.msg_titre_topic{
-    font-size: 25px;
 }
 
 main table {
