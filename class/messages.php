@@ -72,10 +72,16 @@ class messages{
         return true;
     }
 
-    public function ajouterMessage($titre, $message, $id_conversation, $id_utilisateur, $login, $date)
+    public function ajouterMessage($titre, $message, $id_conversation, $id_utilisateur, $login)
     {
-        $query = $this->pdo->prepare("INSERT INTO `messages`(`titre`, `message`, `id_conversation`, `id_utilisateur`, `login`, `date`) VALUES (:titre, :message, :id_conversation, :id_utilisateur, :login, :date_ajout)");
-        $query->execute(["titre"=>$titre, "message"=>$message, "id_conversation"=>$id_conversation, "id_utilisateur"=>$id_utilisateur, "login"=>$login, "date_ajout"=>$date]);
+        $query = $this->pdo->prepare("INSERT INTO `messages`(`titre`, `message`, `id_conversation`, `id_utilisateur`, `login`, `date`) VALUES (:titre, :message, :id_conversation, :id_utilisateur, :login, NOW())");
+        $query->execute(["titre"=>$titre, "message"=>$message, "id_conversation"=>$id_conversation, "id_utilisateur"=>$id_utilisateur, "login"=>$login]);
+    }
+
+    public function supprimerMessage($id_message)
+    {
+        $query = $this->pdo->prepare("DELETE from messages WHERE id=:id_message");
+        $query->execute(["id_message"=>$id_message]);
     }
 
     public function ajouterConversation($nom_conversation, $login, $id_topic)
@@ -86,15 +92,21 @@ class messages{
         if (!$check_conv){
             $query = $this->pdo->prepare("INSERT INTO `conversations`(`nom_conversation`, `createur_conversation`, `id_topic`) VALUES (:nom_conversation, :login, :id_topic)");
             $query->execute(["nom_conversation" => $nom_conversation, "login" => $login, "id_topic" => $id_topic]);
-            return "Le sujet a été ajouté";
+            return "<p>" . "Le sujet a été ajouté" . "</p>";
         }
-        else return "Il existe déjà un sujet du même nom";
+        else return "<p>" . "Il existe déjà un sujet du même nom" . "</p>";
     }
 
     public function ajouterTopic($nom_topic, $login, $access)
     {
-        $query = $this->pdo->prepare("INSERT INTO `topic`(`nom_topic`, `createur_topic`, `access`) VALUES (:nom_topic, :login, :access)");
-        $query->execute(["nom_topic"=>$nom_topic, "login"=>$login, "access"=>$access]);
+        $query = $this->pdo->prepare("SELECT id FROM topic WHERE nom_topic=:nom_topic");
+        $query->execute(["nom_topic" => $nom_topic]);
+        $check_topic = $query->fetchColumn();
+        if (!$check_topic) {
+            $query = $this->pdo->prepare("INSERT INTO `topic`(`nom_topic`, `createur_topic`, `access`) VALUES (:nom_topic, :login, :access)");
+            $query->execute(["nom_topic" => $nom_topic, "login" => $login, "access" => $access]);
+            return "<p>" . "Topic ajoute" . "</p>";
+        } else return "<p>" . "Il existe deja un topic du meme nom" . "</p>";
     }
 
     public function ajouterlike($id_message, $id_utilisateur)
@@ -114,7 +126,6 @@ class messages{
         $query=$this->pdo->prepare("SELECT id FROM suivi_like WHERE id_utilisateur=:id_utilisateur AND id_message=:id_message");
         $query->execute(["id_utilisateur"=>$id_utilisateur,"id_message"=>$id_message]);
         $check_like=$query->fetchColumn();
-        var_dump($check_like);
         if (!$check_like) {
             $query = $this->pdo->prepare("INSERT INTO `suivi_like`(`id_message`,`id_utilisateur`,`dislike_send`) VALUES (:id_message, :id_utilisateur, :dislike_send)");
             $query->execute(["id_message" => $id_message, "id_utilisateur" => $id_utilisateur, "dislike_send" => 1]);

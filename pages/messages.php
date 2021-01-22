@@ -36,7 +36,7 @@ if($messages->afficherMessage($_GET['id'])==true)
     }
 }
 ?>
-<form method="post">
+<form action="" method="post">
     <label for="textarea">Ajouter un message à cette conversation</label>
     <input type="text" placeholder="titre du message" name="titre_message" id="titre_message">
     <textarea placeholder="ajoutez votre message" name="message" id="message"></textarea>

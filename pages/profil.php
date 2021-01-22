@@ -35,7 +35,7 @@ if ($_SESSION['status']=='admin')
         echo "Le statut à bien été modifié";
     }
 ?>
-<form method="post">
+<form class="delete_profil" method="post">
     <input type="checkbox" name="delete_profile" id="delete_profile"> Supprimer le profil </input>
     <input type="submit" value="Valider" name="submit_delete_user" id="submit_delete_user">
 

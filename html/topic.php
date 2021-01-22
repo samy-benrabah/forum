@@ -30,7 +30,7 @@ $messages = new messages();
     <div class="titre-topic">
         <h1>Topics</h1>
     </div>
-    <table>
+    <table class="table_topic">
         <?php
         if ($messages->afficherTopic()==true)
         {
@@ -56,31 +56,45 @@ $messages = new messages();
                     echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
                 }
             }
-        } else "Aucun topic à afficher"
+        } else "Aucun topic à afficher";
         ?>
     </table>
-<form action="" method="get">
-<div class="button-topic">
-    <input class="button-topic" type="submit" value="Ajouter">
+    <?php
+    if ($_SESSION['status']=='admin' || $_SESSION['status']=='mod')
+    {
+        echo'<form action="" method="post">
+            <div class="button-topic">
+                <input class="button-topic" name="button_topic" id="button_topic" type="submit" value="Ajouter">
+            </div>';
+    }
+    ?>
     </div>
-    </form>
-    </div>
-
-    <div class="formulaire">
+        <?php
+        if (isset($_POST['button_topic'])) {
+            echo '<div class="formulaire">
     <div class="titre-topic">
-        <h1>Topics</h1>
+        <h1>Ajouter un topic</h1>
     </div>
-
     <div class="login">
    <label for="login">Titre : </label>
-    <input type="text" name="login">
+    <input type="text" name="titre_topic" id="titre_topic">
    </div>
+        <label class="select_access" for="modif_access">Accessibilité :</label>
+        <select name="modif_access" id="modif_access">
+            <option></option>
+            <option>Membre</option>
+            <option value="mod">Modérateur</option>
+            <option value="admin">Administrateur</option>
+        </select>
+        <input type="submit" value="Valider" name="submit_topic" id="submit_topic">';
+        }
+            if (isset($_POST['submit_topic'])) {
+                if (!empty(trim($_POST['submit_topic']))) {
+                    echo $messages->ajouterTopic($_POST['titre_topic'], $_SESSION['login'], $_POST['modif_access']);
+                } else echo "Merci de completer le titre du topic";
+            }
 
-<form action="" method="get">
-<div class="button-topic">
-    <input class="button-topic" type="submit" value="Ajouter">
-    </div>
-    </form>
+        ?>
     </div>
     </div>
 </main>

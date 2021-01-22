@@ -24,17 +24,18 @@ $messages = new messages();
     </form>
 </header>
 <main>
-    <div class="full-topic">
-<div class="topic">
+    <div class="full-message">
+<div class="affich_message">
 <div class="titre-topic">
         <h1><?php echo $messages->titreConversation($_GET['id_conversation'])?></h1>
     </div>
     <div class="titre-sujet">
         <h2> Messages</h2>
     </div>
-    <div class="table">
+    <div class="table_message">
 <table>
     <?php
+
     if($messages->afficherMessage($_GET['id_conversation'])==true)
     {
         $messages->setidConversation($_GET['id_conversation']);
@@ -42,58 +43,71 @@ $messages = new messages();
             $login = $messages->allresult_messages[$i]['login'];
             $id = $messages->allresult_messages[$i]['id_utilisateur'];
             $id_message=$messages->allresult_messages[$i]['id'];
-            echo "<tr>" . "<td>" . "auteur du message: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "<br>";
-            echo $messages->allresult_messages[$i]['titre'] . "<br>";
-            echo $messages->allresult_messages[$i]['message'] . "<br>";
-            echo "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='aime'>" . $messages->afficherlike($id_message) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='aime pas'>" . $messages->afficherdislike($id_message) . "</form>" ;
-            echo "<form method='post'>" . "<input type='submit' name='supp=$id_message' id='like=$id_message' value='supp'>";
+            echo "<tr class='tr_message'>" . "<td>" . "Par: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "</td>";
+            echo "<td>" . $messages->allresult_messages[$i]['titre'] . "</td>";
+            echo "<td class='td_message'>" . $messages->allresult_messages[$i]['message'] . "</td>";
+            echo "<td>" . "Le: " . $messages->allresult_messages[$i]['date'] . "</td>";
+            echo "<td>" . "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='J`aime'>" . $messages->afficherlike($id_message) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='Je n`aime pas'>" . $messages->afficherdislike($id_message) . "</form>" ;
             if (isset($_POST["like=$id_message"]))
             {
                 if ($messages->ajouterlike($id_message, $_SESSION['id'])==true)
                 {
-                    echo "like ajouté";
+                    echo "like ajoute";
                 }
-                else echo "déjà voté";
+                else echo "deja vote";
             }
             if (isset($_POST["dislike=$id_message"]))
             {
                 if ($messages->ajouterdislike($id_message, $_SESSION['id'])==true)
                 {
-                    echo "dislike ajouté";
+                    echo "dislike ajoute";
                 }
-                else echo "déjà voté";
+                else echo "deja vote";
             }
+            if ($_SESSION['status']=='admin') {
+                echo "<td>" . "<form method='post'>" . "<input type='submit' name='supp=$id_message' id='supp=$id_message' value='supp. message'>" . "</form>" . "</td>";
+                if (isset($_POST["supp=$id_message"])){
+                    $messages->supprimerMessage($id_message);
+                }
+            }
+
         } echo "</td>" . "</tr>";
     }
     ?>
 </table>
 </div>
+    </div>
+        <div class="formulaire_message">
+<form action="" method="post">
 
-<form action="" method="get">
-<div class="button-sujet">
-    <input class="button-sujet" type="button" value="Ajouter">
-    </div>
-    </form>
-    </div>
-    <div class="formulaire">
-    <div class="titre-topic">
-        <h1>Sujets</h1>
-    </div>
+        <div class="titre-topic">
+            <h1>Ajouter message</h1>
+        </div>
 
-    <div class="login">
-   <label for="login">Titre : </label>
-    <input type="text" name="login">
-   </div>
+        <div class="login">
+            <label for="titre_message">Titre : </label>
+            <input type="text" name="titre_message">
+       </div>
 
-<div class="message">
-    <label for="texte">Texte:</label>
-    <input type="text" name="message">
-</div>
-<form action="" method="get">
-<div class="button-topic">
-    <input class="button-topic" type="button" value="Ajouter">
+        <div class="message">
+            <label for="text_message">Texte:</label>
+            <input type="text" name="text_message">
+        </div>
+
+
+
+    <?php
+    if (isset($_POST['submit_message']))
+    {
+        $date = date('Y-m-d H:i:s');
+        $id_conversation = $messages->getidConversation();
+        $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
+        echo "Votre message a bien ete ajoute" . "<br>";
+    }    ?>
+    <div class="button-topic">
+        <input class="button-topic" name="submit_message" type="submit" value="Ajouter">
     </div>
-    </form>
+</form>
     </div>
     </div>
 </main>

@@ -26,23 +26,24 @@ $admin = new admin();
         <i class="fas fa-search"></i>
     </form>
 </header>
-<main>
-
+<main class="profil">
+    <h2>Infos profil</h2>
 <?php
     if($user->afficherProfil($_GET['id'])==true)
     {
-        echo "<div>" . "Login: " . $user->user_info[0]['login'] . "<br>";
-        echo "Email : " . $user->user_info[0]['email'] . "<br>";
-        echo "Statut : " . $user->user_info[0]['status'] . "<br>";
-        echo "Date d'inscription : " . $user->user_info[0]['date_inscription'] . "<br>" . "</div>";
-        echo "Nombre de messages envoyés : " . $user->nbmessages($_SESSION['id']) . "<br>";
-    };
+        echo "<div>" . "<p>" . "Login: " . $user->user_info[0]['login'] . "</p>" . "<br>";
+        echo "<p>" . "Email : " . $user->user_info[0]['email'] . "</p>" . "<br>";
+        echo "<p>" . "Statut : " . $user->user_info[0]['status'] . "</p>" . "<br>";
+        echo "<p>" . "Date d'inscription : " . $user->user_info[0]['date_inscription'] . "</p>" . "<br>";
+        echo "<p>" . "Nombre de messages envoyes : " . $user->nbmessages($_SESSION['id']) .  "</p>" . "<br>" . "</div>";
+    }
 
     if ($_SESSION['status']=='admin')
     {
 ?>
-    <label for="modif_status">Modifier le statut du membre</label>
+    <h2>Espace admin :</h2>
     <form method="post" name="modif_profil" id="modif_profil">
+    <label class="profil" for="modif_status">Modifier le statut du membre :</label>
         <select name="modif_status" id="modif_status">
             <option></option>
             <option>Membre</option>
@@ -58,7 +59,7 @@ if (isset($_POST['submit_change_status']))
     echo "Le statut à bien été modifié";
 }
 ?>
-    <form method="post">
+    <form class="delete_profil" method="post">
         <input type="checkbox" name="delete_profile" id="delete_profile"> Supprimer le profil </input>
         <input type="submit" value="Valider" name="submit_delete_user" id="submit_delete_user">
 
