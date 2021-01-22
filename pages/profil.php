@@ -6,16 +6,13 @@ require_once '../class/admin.php';
 $user = new user();
 $admin = new admin();
 
-var_dump($_GET['id']);
-var_dump($_SESSION['status']);
-var_dump($_SESSION['login']);
-
 if($user->afficherProfil($_GET['id'])==true)
 {
     echo "<div>" . "Login: " . $user->user_info[0]['login'] . "<br>";
-    echo "Email: " . $user->user_info[0]['email'] . "<br>";
-    echo "Statut :" . $user->user_info[0]['status'] . "<br>";
-    echo "Date d'inscritpion :" . $user->user_info[0]['date_inscription'] . "<br>" . "</div>";
+    echo "Email : " . $user->user_info[0]['email'] . "<br>";
+    echo "Statut : " . $user->user_info[0]['status'] . "<br>";
+    echo "Date d'inscription : " . $user->user_info[0]['date_inscription'] . "<br>" . "</div>";
+    echo "Nombre de messages envoyés : " . $user->nbmessages($_SESSION['id']) . "<br>";
 };
 
 if ($_SESSION['status']=='admin')
@@ -38,7 +35,7 @@ if ($_SESSION['status']=='admin')
         echo "Le statut à bien été modifié";
     }
 ?>
-<form method="post">
+<form class="delete_profil" method="post">
     <input type="checkbox" name="delete_profile" id="delete_profile"> Supprimer le profil </input>
     <input type="submit" value="Valider" name="submit_delete_user" id="submit_delete_user">
 

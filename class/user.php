@@ -221,8 +221,7 @@ class user
             $query = $this->pdo->prepare("SELECT * FROM utilisateurs WHERE id=:id");
             $query->execute(['id' => $id]);
             $allresult = $query->fetch(PDO::FETCH_ASSOC);
-            $this->user_info[] = $allresult;
-            var_dump($this->user_info);
+            $this->user_info[]=$allresult;
             return true;
         } else {
             return false;
@@ -230,9 +229,17 @@ class user
 
     }
 
-    public function setId($id)
+    public function nbmessages($id_utilisateur)
     {
-        $this->id = $id;
+        $query= $this->pdo -> prepare("SELECT COUNT(id) FROM messages WHERE id_utilisateur=:id_utilisateur");
+        $query->execute(['id_utilisateur'=>$id_utilisateur]);
+        $this->allresult_mess = $query->fetch(PDO::FETCH_ASSOC);
+        return $this->allresult_mess['COUNT(id)'];
+
+    }
+
+    public function setId($id){
+        $this->id=$id;
         return $this->id;
     }
 

@@ -10,7 +10,8 @@ body {
     background-color: black;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
+    height: 100vh;
 }
 
 header section {
@@ -104,20 +105,29 @@ header .header-search-box:focus-within {
 }
 
 main {
-    height: 100%;
+    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     margin-top: 3%;
-    color: white;
+    margin-bottom: 3%;
+    color: white
+}
+
+
+.full-message {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around   ;
 }
 
 .full-topic {
-    width: 50%;
+    width: 70%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .full-bloc {
@@ -205,6 +215,54 @@ main label {
     place-self: center;
 }
 
+main label.profil{
+    align-self: start;
+    width: 50%;
+}
+
+form#modif_profil{
+    display: flex;
+    flex-direction: row;
+}
+
+select#modif_status{
+    height: 50%;
+    align-self: center;
+}
+
+
+main.profil{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 3%;
+    color: white;
+    align-self: center;
+    align-items: start;
+    font-size: 25px;
+}
+
+form#modif_profil{
+    width: 80%;
+    margin-bottom: 2%;
+    align-self: center;
+}
+
+select#modif_status{
+    margin-right: 15px;
+}
+
+form.delete_profil{
+    align-self: center;
+    width: 50%;
+}
+
+input#submit_delete_user{
+    margin-left: 20px;
+}
+
 main input[type=text] {
     place-self: center;
     background: black;
@@ -262,7 +320,6 @@ main p {
 .message {
     display: flex;
     flex-direction: row;
-    margin-top: 2em;
     font-size: 25px;
     outline: none;
 }
@@ -291,12 +348,13 @@ main p {
     display: flex;
     justify-content: center;
     margin-top: 5px;
+    margin-bottom: 5px;
+
 }
 
 .button-topic {
     display: flex;
     justify-content: center;
-    margin-top: 15px;
 }
 
 main input[type=submit] {
@@ -313,9 +371,16 @@ main input[type=submit]:hover {
     box-shadow: 0px 0px 10px 2px rgba(43, 255, 43, 1);
 }
 
-.topic {
-    height: 450px;
-    width: 350px;
+.affich_message {
+    height: 70%;
+    width: 100%;
+    border: solid 2px greenyellow;
+    border-radius: 1em;
+}
+
+.topic, .sujet {
+    height: 500px;
+    width: 300px;
     border: solid 2px greenyellow;
     border-radius: 1em;
 }
@@ -328,14 +393,59 @@ main input[type=submit]:hover {
     border-bottom: rgb(255, 123, 0) 2px solid;
 }
 
-.table {
+.table_topic, .table_sujet {
     overflow-y: scroll;
     height: 15vw;
+    height: 350px;
+    display: flex;
+    align-self: center;
+}
+
+.table_message {
+    overflow-y: scroll;
+    width: 100%;
+    height: 82%;
+    display: flex;
+    align-self: center;
+}
+
+.table_message table tbody{
+    width: 100%
+}
+
+.table table{
+    height: 100%;
+}
+
+.table_topic tr, .table_topic tr{
+    width: 100%;
+    align-content: center;
+}
+
+.table table td{
+    height: 90%;
+}
+
+.tr_message{
+    width: 100%;
+    height: 110px;
+
+}
+
+.td_message{
+    width: 600px;
+}
+
+.formulaire_message {
+    height: 25%;
+    width: 100%;
+    border: solid 2px greenyellow;
+    border-radius: 1em;
 }
 
 .formulaire {
-    height: 450px;
-    width: 350px;
+    height: 225px;
+    width: 450px;
     border: solid 2px greenyellow;
     border-radius: 1em;
 }
@@ -383,8 +493,6 @@ main h2 {
 }
 
 footer {
-    position: absolute;
-    bottom: 0;
     width: 100%;
     height: 2.5rem;
     background-color: #333;

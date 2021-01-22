@@ -1,3 +1,8 @@
+<?php
+session_start();
+require_once '../class/messages.php';
+$messages = new messages();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,56 +25,56 @@
 </header>
 <main>
     <div class="full-topic">
-<div class="topic">
+<div class="sujet">
 <div class="titre-topic">
-        <h1>Titre Topics</h1>
+        <h1><?php echo $messages->titreTopic($_GET['id_topic'])?></h1>
     </div>
     <div class="titre-sujet">
         <h2> Sujets</h2>
     </div>
-    <table>
+    <table class="table_sujet">
     <tr>
-        <th>
-            <!--Nom du topic-->
-        </th>
+            <?php
+            if($messages->afficherConversation($_GET['id_topic'])==true)
+            {
+                for ($i=0;isset($messages->allresult_conversation[$i]);$i++){
+                    $id_conversation=$messages->allresult_conversation[$i]['id'];
+                    echo "<tr>" . "<td>" . "<h2>" . "<a href='message.php?id_conversation=$id_conversation'>" . $messages->allresult_conversation[$i]['nom_conversation'] . "</a>" . "</h2>" . "</td>" . "</tr>";
+                }
+            }
+            ?>
     </tr>
     </table>
-    <div class="table">
-<table>
-    <tr>
-        <td>
-          <a href="message.php"> Titre-Sujet  </a>
-        </td>
-    </tr>
-    <tr>
-    <td>
-    <a href="message.php"> Titre-Sujet </a>
-        </td>
-    </tr>
-</table>
-</div>
 
-<form action="" method="get">
-<div class="button-sujet">
-    <input class="button-sujet" type="submit" value="Ajouter">
+
     </div>
-    </form>
-    </div>
+
     <div class="formulaire">
-    <div class="titre-topic">
-        <h1>Sujets</h1>
-    </div>
 
+        <div class="titre-topic">
+            <h1>Ajouter un sujet</h1>
+        </div>
+<form method="post">
     <div class="login">
    <label for="login">Titre : </label>
-    <input type="text" name="login">
+    <input type="text" name="titre_conv">
    </div>
-
-<form action="" method="get">
 <div class="button-topic">
-    <input class="button-topic" type="submit" value="Ajouter">
+    <input class="button-topic" type="submit" name="submit_new_conv" value="Ajouter">
     </div>
+</form>
+
+    <?php
+    if (isset($_POST['submit_new_conv']))
+    {
+        if(!empty($_POST['titre_conv'])) {
+            $titre = $_POST['titre_conv'];
+            echo "<div class='msg_titre_topic'>" . $messages->ajouterConversation($titre, $_SESSION['login'], $_GET['id_topic']) . "</div>";
+        } else echo "<div class='msg_titre_topic'>" . "<p>" . "Merci de compléter le titre du sujet" . "</p>" . "</div>";
+    }
+    ?>
     </form>
+    </div>
     </div>
     </div>
 </main>
