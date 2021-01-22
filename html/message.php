@@ -35,7 +35,6 @@ $messages = new messages();
     <div class="table_message">
 <table>
     <?php
-
     if($messages->afficherMessage($_GET['id_conversation'])==true)
     {
         $messages->setidConversation($_GET['id_conversation']);
@@ -70,10 +69,8 @@ $messages = new messages();
                     $messages->supprimerMessage($id_message);
                 }
             }
-
         } echo "</td>" . "</tr>";
-    }
-    ?>
+    }?>
 </table>
 </div>
     </div>
@@ -83,7 +80,6 @@ $messages = new messages();
         <div class="titre-topic">
             <h1>Ajouter message</h1>
         </div>
-
         <div class="login">
             <label for="titre_message">Titre : </label>
             <input type="text" name="titre_message">
@@ -93,17 +89,16 @@ $messages = new messages();
             <label for="text_message">Texte:</label>
             <input type="text" name="text_message">
         </div>
-
-
-
     <?php
     if (isset($_POST['submit_message']))
     {
-        $date = date('Y-m-d H:i:s');
-        $id_conversation = $messages->getidConversation();
-        $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
-        echo "Votre message a bien ete ajoute" . "<br>";
-    }    ?>
+        if (!empty(trim($_POST['titre_message'])) || !empty(trim($_POST['text_message'])))
+            {
+                $date = date('Y-m-d H:i:s');
+                $id_conversation = $messages->getidConversation();
+                $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
+            } else echo "Merci de compléter les champs titre et message";
+    }?>
     <div class="button-topic">
         <input class="button-topic" name="submit_message" type="submit" value="Ajouter">
     </div>
