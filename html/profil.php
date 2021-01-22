@@ -83,7 +83,7 @@ if (isset($_POST['confirm_delete']))
     if (isset($_POST['check_delete'])) {
         var_dump($_POST['check_delete']);
         var_dump($_POST['confirm_delete']);
-        //$admin->deleteUser($_GET['id']);
+        $admin->deleteUser($_GET['id']);
         echo "le profil a été supprimé";
     }
 }
