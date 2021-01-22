@@ -1,3 +1,10 @@
+<?php
+session_start();
+require_once '../class/compteur/compteur.php';
+// require '../class/compteur/compteur.txt';
+$compteur = new Compteur();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +27,18 @@
 </header>
 <main>
 <p>Bienvenue sur le forum Dev.Help le forum d'entraide
-des developpeurs que tu sois plutot front , back ou full!! Tu es le bienvenue</p>
+des developpeurs que tu sois plutot front , back ou full!! </br>
+
+
+
+<?php
+if ($_SESSION['login'] && $_SESSION["visite"] != "oui") {?>
+Nombre de visiteurs depuis la creation de ce forum :
+   <?php echo $compteur->afficher_compteur(); ?>!
+    <?php $_SESSION["visite"] = "oui";
+}?>
+</p>
+
 </main>
 <footer>
     <section>
@@ -33,6 +51,7 @@ des developpeurs que tu sois plutot front , back ou full!! Tu es le bienvenue</p
     <div class="footer-link-2">
     <a href="connexion.php">Connexion</a>
     <a href="inscription.php">Inscription</a>
+    <a href="profil.php">Profil</a>
     </div>
 
     </section>

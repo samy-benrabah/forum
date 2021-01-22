@@ -28,7 +28,9 @@ $user = new user();
     </form>
 </header>
 <main>
-<div class="bloc">
+
+<div class="bloc-profil">
+    <div class="int-bloc-profil">
 <h1>Profil</h1>
 <div class="form">
 <form action="" method="post">
@@ -50,6 +52,16 @@ $user = new user();
     <input name="submit_register"  type="submit" value="S'inscrire">
     </div>
 </form>
+</div>
+<div class="bloc-avatar">
+    <img src="<?=$_SESSION['avatar']?>" alt="picture">
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+    <input type="file" name="picture" >
+    <input type="submit" name ="upload" value="Upload">
+</form>
+
+</div>
+</div>
 </div>
 </div>
 </main>

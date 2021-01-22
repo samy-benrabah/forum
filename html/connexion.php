@@ -59,6 +59,8 @@ if ($user->connect($_POST['login'], $_POST['password']) == true) {
         $_SESSION['login'] = $user->getLogin();
         $_SESSION['id'] = $user->getId();
         $_SESSION['status'] = $user->getStatus();
+        $_SESSION['avatar'] = $user->getAvatar();
+        $_SESSION['visite'] = 'non';
         echo "Bonjour" . " " . $user->getLogin() . " " . "vous etes connecte" . "<br>";
         echo "Vous allez etre automatiquement redirige vers l'accueil patientez quelques secondes, sinon cliquez " . "<a href='../index.php'>ici</a>";
         header('Refresh: 6; url=../html/accueil.php');

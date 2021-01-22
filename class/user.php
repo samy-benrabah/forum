@@ -6,6 +6,7 @@ class user
     protected $id = '';
     protected $email = '';
     protected $status = '';
+    protected $avatar = '';
 
     public function __construct()
     {
@@ -20,7 +21,7 @@ class user
         $password = htmlspecialchars($password);
         $email = htmlspecialchars($email);
         $status = 'membre';
-
+        $avatar = 'upload/avatar.jpg';
         if (empty(trim($login)) || empty(trim($password)) || empty(trim($email))) {
             //Vérifie si l'un des champs est vide
 
@@ -53,13 +54,14 @@ class user
             }
             $count_doublons = (count($this->errors));
             if ($count_doublons == 0) {
-                $requete = $this->pdo->prepare("INSERT INTO `utilisateurs`(`login`, `password`, `email`,`status`) VALUES (:login,:password, :email, :status)");
+                $requete = $this->pdo->prepare("INSERT INTO `utilisateurs`(login, password, email,status,avatar) VALUES (:login,:password, :email, :status,:avatar)");
                 $password = password_hash($password, PASSWORD_BCRYPT);
-                $requete->execute(['login' => $login, 'password' => $password, 'email' => $email, 'status' => $status]);
+                $requete->execute(['login' => $login, 'password' => $password, 'email' => $email, 'status' => $status, 'avatar' => $avatar]);
                 $this->login = $login;
                 $this->password = $password;
                 $this->email = $email;
                 $this->status = $status;
+                $this->avatar = $avatar;
                 return true;
             } else {
                 return false;
@@ -99,6 +101,7 @@ class user
                     $this->password = $allresult['password'];
                     $this->email = $allresult['email'];
                     $this->status = $allresult['status'];
+                    $this->avatar = $allresult['avatar'];
                     return true;
                 } else {
                     $this->errors[] = "Le mots de passe est incorrect";
@@ -264,7 +267,10 @@ class user
     {
         return $this->status;
     }
-
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
     public function delete()
     {
         global $pdo;
