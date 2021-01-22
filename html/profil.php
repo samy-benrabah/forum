@@ -29,14 +29,22 @@ $admin = new admin();
 <main class="profil">
     <h2>Infos profil</h2>
 <?php
-    if($user->afficherProfil($_GET['id'])==true)
-    {
+if (isset($_GET['id'])) {
+    if ($user->afficherProfil($_GET['id']) == true) {
         echo "<div>" . "<p>" . "Login: " . $user->user_info[0]['login'] . "</p>" . "<br>";
         echo "<p>" . "Email : " . $user->user_info[0]['email'] . "</p>" . "<br>";
         echo "<p>" . "Statut : " . $user->user_info[0]['status'] . "</p>" . "<br>";
         echo "<p>" . "Date d'inscription : " . $user->user_info[0]['date_inscription'] . "</p>" . "<br>";
-        echo "<p>" . "Nombre de messages envoyes : " . $user->nbmessages($_SESSION['id']) .  "</p>" . "<br>" . "</div>";
+        echo "<p>" . "Nombre de messages envoyes : " . $user->nbmessages($_SESSION['id']) . "</p>" . "<br>" . "</div>";
     }
+}else {
+    $user->afficherProfil($_SESSION['id']);
+    echo "<div>" . "<p>" . "Login: " . $user->user_info[0]['login'] . "</p>" . "<br>";
+    echo "<p>" . "Email : " . $user->user_info[0]['email'] . "</p>" . "<br>";
+    echo "<p>" . "Statut : " . $user->user_info[0]['status'] . "</p>" . "<br>";
+    echo "<p>" . "Date d'inscription : " . $user->user_info[0]['date_inscription'] . "</p>" . "<br>";
+    echo "<p>" . "Nombre de messages envoyes : " . $user->nbmessages($_SESSION['id']) . "</p>" . "<br>" . "</div>";
+}
 
     if ($_SESSION['status']=='admin')
     {
