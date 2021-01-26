@@ -23,8 +23,8 @@ $messages = new messages();
         <i class="fas fa-search"></i>
     </form>
 </header>
-<main>
-    <div class="full-topic">
+<main class="sujet-global">
+    <div class="full-sujet">
 <div class="sujet">
 <div class="titre-topic">
         <h1><?php echo $messages->titreTopic($_GET['id_topic'])?></h1>
@@ -39,7 +39,7 @@ $messages = new messages();
             {
                 for ($i=0;isset($messages->allresult_conversation[$i]);$i++){
                     $id_conversation=$messages->allresult_conversation[$i]['id'];
-                    echo "<tr>" . "<td>" . "<h2>" . "<a href='message.php?id_conversation=$id_conversation'>" . $messages->allresult_conversation[$i]['nom_conversation'] . "</a>" . "</h2>" . "</td>" . "</tr>";
+                    echo "<tr>" . "<td>" . "<p>" . "<a href='message.php?id_conversation=$id_conversation'>" . $messages->allresult_conversation[$i]['nom_conversation'] . "</a>" . "</p>" . "</td>" . "</tr>";
                 }
             }
             ?>
@@ -49,14 +49,14 @@ $messages = new messages();
 
     </div>
 
-    <div class="formulaire">
+    <div class="formulaire-sujet">
 
         <div class="titre-topic">
             <h1>Ajouter un sujet</h1>
         </div>
 <form method="post">
-    <div class="login">
-   <label for="login">Titre : </label>
+    <div class="ajout-sujet">
+   <label for="ajout-sujet">Titre : </label>
     <input type="text" name="titre_conv">
    </div>
 <div class="button-topic">
