@@ -29,14 +29,22 @@ $admin = new admin();
 <main class="profil">
     <h2>Infos profil</h2>
 <?php
-    if($user->afficherProfil($_GET['id'])==true)
-    {
+if (isset($_GET['id'])) {
+    if ($user->afficherProfil($_GET['id']) == true) {
         echo "<div>" . "<p>" . "Login: " . $user->user_info[0]['login'] . "</p>" . "<br>";
         echo "<p>" . "Email : " . $user->user_info[0]['email'] . "</p>" . "<br>";
         echo "<p>" . "Statut : " . $user->user_info[0]['status'] . "</p>" . "<br>";
         echo "<p>" . "Date d'inscription : " . $user->user_info[0]['date_inscription'] . "</p>" . "<br>";
-        echo "<p>" . "Nombre de messages envoyes : " . $user->nbmessages($_SESSION['id']) .  "</p>" . "<br>" . "</div>";
+        echo "<p>" . "Nombre de messages envoyes : " . $user->nbmessages($_SESSION['id']) . "</p>" . "<br>" . "</div>";
     }
+}else {
+    $user->afficherProfil($_SESSION['id']);
+    echo "<div>" . "<p>" . "Login: " . $user->user_info[0]['login'] . "</p>" . "<br>";
+    echo "<p>" . "Email : " . $user->user_info[0]['email'] . "</p>" . "<br>";
+    echo "<p>" . "Statut : " . $user->user_info[0]['status'] . "</p>" . "<br>";
+    echo "<p>" . "Date d'inscription : " . $user->user_info[0]['date_inscription'] . "</p>" . "<br>";
+    echo "<p>" . "Nombre de messages envoyes : " . $user->nbmessages($_SESSION['id']) . "</p>" . "<br>" . "</div>";
+}
 
     if ($_SESSION['status']=='admin')
     {
@@ -75,11 +83,18 @@ if (isset($_POST['confirm_delete']))
     if (isset($_POST['check_delete'])) {
         var_dump($_POST['check_delete']);
         var_dump($_POST['confirm_delete']);
-        //$admin->deleteUser($_GET['id']);
+        $admin->deleteUser($_GET['id']);
         echo "le profil a été supprimé";
     }
 }
 }?>
+<div class="bloc-avatar">
+    <img src="<?=$_SESSION['avatar']?>" alt="picture">
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+    <input type="file" name="picture" >
+    <input type="submit" name ="upload" value="Upload">
+</form>
+</div>
     </form>
 </main>
 <footer>

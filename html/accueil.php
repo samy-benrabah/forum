@@ -1,3 +1,11 @@
+<?php
+session_start();
+require_once '../class/compteur/compteur.php';
+require_once '../class/messages.php';
+$compteur = new Compteur();
+$messages = new messages();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,9 +26,90 @@
         <i class="fas fa-search"></i>
     </form>
 </header>
-<main>
-<p>Bienvenue sur le forum Dev.Help le forum d'entraide
-des developpeurs que tu sois plutot front , back ou full!! Tu es le bienvenue</p>
+<main class="accueil-global">
+    <div class="accueil">
+        <p><b>Bienvenue sur le forum Dev.Help</b></br> Le forum d'entraide
+    des developpeurs que tu sois plutot front , back ou full!!
+<?php
+if ($_SESSION['login'] && $_SESSION["visite"] != "oui") {?>
+Nombre de visiteurs depuis la creation de ce forum :
+   <?php echo $compteur->afficher_compteur(); ?>!
+    <?php $_SESSION["visite"] = "oui";
+}?>
+</p>
+    <div class="full-topic">
+        <div class="topic">
+            <div class="titre-topic">
+                <h1>Topics</h1>
+            </div>
+            <table class="table_topic">
+                <?php
+                if ($messages->afficherTopic()==true)
+                {
+                    if (!$_SESSION['login'])
+                    {
+                        $messages->afficherTopicpublic();
+                        for ($i=0;isset($messages->allresult_topic_public[$i]);$i++){
+                            $id_topic=$messages->allresult_topic_public[$i]['id'];
+                            echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_public[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
+                        }
+                    }
+                    if ($_SESSION['status']=='membre')
+                    {
+                        $messages->afficherTopicmembres();
+                        for ($i=0;isset($messages->allresult_topic_membres[$i]);$i++){
+                            $id_topic=$messages->allresult_topic_membres[$i]['id'];
+                            echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_membres[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
+                        }
+                    }
+                    if ($_SESSION['status']=='admin' || $_SESSION['status']=='mod') {
+                        for ($i = 0; isset($messages->allresult_topic[$i]); $i++) {
+                            $id_topic = $messages->allresult_topic[$i]['id'];
+                            echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
+                        }
+                    }
+                } else "Aucun topic à afficher";
+                ?>
+            </table>
+            <?php
+            if ($_SESSION['status']=='admin' || $_SESSION['status']=='mod')
+            {
+                echo'<form action="" method="post">
+            <div class="button-topic">
+                <input class="button-topic" name="button_topic" id="button_topic" type="submit" value="Ajouter">
+            </div>';
+            }
+            ?>
+        </div>
+        <?php
+        if (isset($_POST['button_topic'])) {
+            echo '<div class="formulaire">
+    <div class="titre-topic">
+        <h1>Ajouter un topic</h1>
+    </div>
+    <div class="login">
+   <label for="login">Titre : </label>
+    <input type="text" name="titre_topic" id="titre_topic">
+   </div>
+        <label class="select_access" for="modif_access">Accessibilité :</label>
+        <select name="modif_access" id="modif_access">
+            <option></option>
+            <option>Membre</option>
+            <option value="mod">Modérateur</option>
+            <option value="admin">Administrateur</option>
+        </select>
+        <input type="submit" value="Valider" name="submit_topic" id="submit_topic">';
+        }
+        if (isset($_POST['submit_topic'])) {
+            if (!empty(trim($_POST['submit_topic']))) {
+                echo $messages->ajouterTopic($_POST['titre_topic'], $_SESSION['login'], $_POST['modif_access']);
+            } else echo "Merci de completer le titre du topic";
+        }
+
+        ?>
+    </div>
+    </div>
+</main>
 </main>
 <footer>
     <section>
@@ -33,6 +122,7 @@ des developpeurs que tu sois plutot front , back ou full!! Tu es le bienvenue</p
     <div class="footer-link-2">
     <a href="connexion.php">Connexion</a>
     <a href="inscription.php">Inscription</a>
+    <a href="profil.php">Profil</a>
     </div>
 
     </section>

@@ -23,7 +23,7 @@ $messages = new messages();
         <i class="fas fa-search"></i>
     </form>
 </header>
-<main>
+<main class="message-global">
     <div class="full-message">
 <div class="affich_message">
 <div class="titre-topic">
@@ -35,7 +35,6 @@ $messages = new messages();
     <div class="table_message">
 <table>
     <?php
-
     if($messages->afficherMessage($_GET['id_conversation'])==true)
     {
         $messages->setidConversation($_GET['id_conversation']);
@@ -43,11 +42,11 @@ $messages = new messages();
             $login = $messages->allresult_messages[$i]['login'];
             $id = $messages->allresult_messages[$i]['id_utilisateur'];
             $id_message=$messages->allresult_messages[$i]['id'];
-            echo "<tr class='tr_message'>" . "<td>" . "Par: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "</td>";
-            echo "<td>" . $messages->allresult_messages[$i]['titre'] . "</td>";
+            echo "<tr class='tr_message'>" . "<td class='td_contenu'>" . "Par: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "</td>";
+            echo "<td class='td_contenu'>" . $messages->allresult_messages[$i]['titre'] . "</td>";
             echo "<td class='td_message'>" . $messages->allresult_messages[$i]['message'] . "</td>";
-            echo "<td>" . "Le: " . $messages->allresult_messages[$i]['date'] . "</td>";
-            echo "<td>" . "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='J`aime'>" . $messages->afficherlike($id_message) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='Je n`aime pas'>" . $messages->afficherdislike($id_message) . "</form>" ;
+            echo "<td class='td_contenu'>" . "Le: " . $messages->allresult_messages[$i]['date'] . "</td>";
+            echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='J`aime'>" . $messages->afficherlike($id_message) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='Je n`aime pas'>" . $messages->afficherdislike($id_message) . "</form>" . "</td>";
             if (isset($_POST["like=$id_message"]))
             {
                 if ($messages->ajouterlike($id_message, $_SESSION['id'])==true)
@@ -65,15 +64,13 @@ $messages = new messages();
                 else echo "deja vote";
             }
             if ($_SESSION['status']=='admin') {
-                echo "<td>" . "<form method='post'>" . "<input type='submit' name='supp=$id_message' id='supp=$id_message' value='supp. message'>" . "</form>" . "</td>";
+                echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='supp=$id_message' id='supp=$id_message' value='supp. message'>" . "</form>" . "</td>";
                 if (isset($_POST["supp=$id_message"])){
                     $messages->supprimerMessage($id_message);
                 }
             }
-
-        } echo "</td>" . "</tr>";
-    }
-    ?>
+        } echo "</tr>";
+    }?>
 </table>
 </div>
     </div>
@@ -83,27 +80,25 @@ $messages = new messages();
         <div class="titre-topic">
             <h1>Ajouter message</h1>
         </div>
-
-        <div class="login">
-            <label for="titre_message">Titre : </label>
+        <div class="ajout-message">
+            <label for="ajout-message">Titre : </label>
             <input type="text" name="titre_message">
        </div>
 
-        <div class="message">
-            <label for="text_message">Texte:</label>
+        <div class="ajout-message">
+            <label for="ajout-message">Texte:</label>
             <input type="text" name="text_message">
         </div>
-
-
-
     <?php
     if (isset($_POST['submit_message']))
     {
-        $date = date('Y-m-d H:i:s');
-        $id_conversation = $messages->getidConversation();
-        $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
-        echo "Votre message a bien ete ajoute" . "<br>";
-    }    ?>
+        if (!empty(trim($_POST['titre_message'])) || !empty(trim($_POST['text_message'])))
+            {
+                $date = date('Y-m-d H:i:s');
+                $id_conversation = $messages->getidConversation();
+                $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
+            } else echo "Merci de compléter les champs titre et message";
+    }?>
     <div class="button-topic">
         <input class="button-topic" name="submit_message" type="submit" value="Ajouter">
     </div>
