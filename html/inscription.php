@@ -22,10 +22,7 @@ $user = new user();
         <img src="../image/logo.black.svg">
         <h1>Dev<span class="header-span-title">.Help</span></h1>
     </div>
-    <form method="get" class="header-search-box">
-        <input autocomplete="off" type="search" name="search" class="header-search-input" placeholder="Recherche">
-        <i class="fas fa-search"></i>
-    </form>
+
 </header>
 <main>
     <div class="full-bloc">

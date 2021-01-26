@@ -107,6 +107,15 @@ header .header-search-box:focus-within {
     box-shadow: 0px 0px 5px 2px rgb(94, 94, 252);
 }
 
+header button {
+    border: none;
+    background-color: transparent;
+}
+
+header i {
+    border: none;
+}
+
 main {
     height: 100vh;
     width: 100%;
