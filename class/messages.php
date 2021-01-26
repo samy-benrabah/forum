@@ -12,12 +12,6 @@ class messages{
 
     }
 
-    public function autoloader ($class)
-    {
-        require_once '../class/' . $class . '.messages.php';
-        spl_autoload_register('autoloader');
-    }
-
     public function afficherTopic()
     {
         $query = $this->pdo->prepare("SELECT id,nom_topic,access FROM `topic`");
