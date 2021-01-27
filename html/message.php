@@ -2,8 +2,9 @@
 session_start();
 require_once '../class/messages.php';
 $messages = new messages();
-
-
+?>
+<form>
+<?php
 if (isset($_POST['submit_message'])) {
     if (!empty(trim($_POST['titre_message'])) || !empty(trim($_POST['text_message']))) {
         $date = date('Y-m-d H:i:s');
@@ -12,6 +13,7 @@ if (isset($_POST['submit_message'])) {
         header('Refresh: 0');
     } else echo "Merci de compléter les champs titre et message";
 } ?>
+</form>
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,25 +87,34 @@ if (isset($_POST['submit_message'])) {
 </div>
     </div>
         <div class="formulaire_message">
-<form action="" method="post">
+            <form action="" method="post">
+                    <div class="titre-topic">
+                        <h1>Ajouter message</h1>
+                    </div>
+                    <div class="ajout-message">
+                        <label for="ajout-message">Titre : </label>
+                        <input type="text" name="titre_message">
+                   </div>
 
-        <div class="titre-topic">
-            <h1>Ajouter message</h1>
-        </div>
-        <div class="ajout-message">
-            <label for="ajout-message">Titre : </label>
-            <input type="text" name="titre_message">
-       </div>
-
-        <div class="ajout-message">
-            <label for="ajout-message">Texte:</label>
-            <input type="text" name="text_message">
-        </div>
-    <div class="button-topic">
-        <input class="button-topic" name="submit_message" type="submit" value="Ajouter">
-    </div>
-</form>
-    </div>
+                    <div class="ajout-message">
+                        <label for="ajout-message">Texte:</label>
+                        <input type="text" name="text_message">
+                    </div>
+                <?php
+                if (isset($_POST['submit_message']))
+                {
+                    if (!empty(trim($_POST['titre_message'])) || !empty(trim($_POST['text_message'])))
+                        {
+                            $date = date('Y-m-d H:i:s');
+                            $id_conversation = $messages->getidConversation();
+                            $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
+                        } else echo "Merci de compléter les champs titre et message";
+                }?>
+                <div class="button-topic">
+                    <input class="button-topic" name="submit_message" type="submit" value="Ajouter">
+                </div>
+            </form>
+         </div>
     </div>
 </main>
 <footer>
