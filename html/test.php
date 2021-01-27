@@ -1,4 +1,5 @@
 <meta charset="utf-8" />
+
 <?php
 
 $bdd = new PDO('mysql:dbname=forum;host=localhost', "root", "");
@@ -12,16 +13,7 @@ if (isset($_GET['q']) and !empty($_GET['q'])) {
     }
 }
 ?>
-<form method="GET">
+<form method="GET" action="affichage-test.php">
    <input type="search" name="q" placeholder="Recherche..." />
    <button type="submit" value="Valider" /></button>
 </form>
-<?php if ($articles->rowCount() > 0) {?>
-   <ul>
-   <?php while ($a = $articles->fetch()) {?>
-      <li><?=$a['nom_topic']?></li>
-   <?php }?>
-   </ul>
-<?php } else {?>
-Aucun résultat pour: <?=$q?>...
-<?php }?>

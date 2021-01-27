@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once '../class/compteur/compteur.php';
 require_once '../class/messages.php';
 require_once '../class/admin.php';
@@ -10,6 +11,8 @@ $articles = '';
 // $search = new Recherche();
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,15 +29,17 @@ $articles = '';
         <img src="../image/logo.black.svg">
         <h1>Dev<span class="header-span-title">.Help</span></h1>
     </div>
-    <div>
 
-    <form method="get" class="header-search-box">
+    <form method="get" class="header-search-box" action="affichage-test.php">
         <input autocomplete="off" type="search" name="search" class="header-search-input" placeholder="Recherche">
 
         <button type="submit" name="submit" >
             <i class="fa fa-search" color = "blue"></i></button>
 
     </form>
+
+
+
 </header>
 <main class="accueil-global">
     <div class="accueil">
@@ -47,6 +52,7 @@ Nombre de visiteurs depuis la creation de ce forum :
     <?php $_SESSION["visite"] = "oui";
 }?>
 </p>
+
     <div class="full-topic">
         <div class="topic">
             <div class="titre-topic">
@@ -118,8 +124,6 @@ Nombre de visiteurs depuis la creation de ce forum :
 
         ?>
     </div>
-    </div>
-</main>
 </main>
 <footer>
     <section>

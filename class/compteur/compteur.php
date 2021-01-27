@@ -19,9 +19,9 @@ class Compteur
     public function incrementation()
     {
 
-        $this->compteur++;
         fseek($this->fichier, 0);
         fputs($this->fichier, $this->compteur);
+        $this->compteur++;
 
     }
     public function afficher_compteur()

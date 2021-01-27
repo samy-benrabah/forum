@@ -27,7 +27,7 @@ $messages = new messages();
     <div class="full-sujet">
 <div class="sujet">
 <div class="titre-topic">
-        <h1><?php echo $messages->titreTopic($_GET['id_topic'])?></h1>
+        <h1><?php echo $messages->titreTopic($_GET['id_topic']) ?></h1>
     </div>
     <div class="titre-sujet">
         <h2> Sujets</h2>
@@ -65,14 +65,16 @@ $messages = new messages();
 </form>
 
     <?php
-    if (isset($_POST['submit_new_conv']))
-    {
-        if(!empty($_POST['titre_conv'])) {
-            $titre = $_POST['titre_conv'];
-            echo "<div class='msg_titre_topic'>" . $messages->ajouterConversation($titre, $_SESSION['login'], $_GET['id_topic']) . "</div>";
-        } else echo "<div class='msg_titre_topic'>" . "<p>" . "Merci de compléter le titre du sujet" . "</p>" . "</div>";
+if (isset($_POST['submit_new_conv'])) {
+    if (!empty($_POST['titre_conv'])) {
+        $titre = $_POST['titre_conv'];
+        echo "<div class='msg_titre_topic'>" . $messages->ajouterConversation($titre, $_SESSION['login'], $_GET['id_topic']) . "</div>";
+    } else {
+        echo "<div class='msg_titre_topic'>" . "<p>" . "Merci de compléter le titre du sujet" . "</p>" . "</div>";
     }
-    ?>
+
+}
+?>
     </form>
     </div>
     </div>
