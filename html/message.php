@@ -58,22 +58,24 @@ if (isset($_POST['submit_message'])) {
             echo "<td class='td_contenu'>" . $messages->allresult_messages[$i]['titre'] . "</td>";
             echo "<td class='td_message'>" . $messages->allresult_messages[$i]['message'] . "</td>";
             echo "<td class='td_contenu'>" . "Le: " . $messages->allresult_messages[$i]['date'] . "</td>";
-            echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='J`aime'>" . $messages->afficherlike($id_message) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='Je n`aime pas'>" . $messages->afficherdislike($id_message) . "</form>" . "</td>";
+            echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='J`aime'>" . $messages->afficherlike($id_message) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='Je n`aime pas'>" . $messages->afficherdislike($id_message);
             if (isset($_POST["like=$id_message"]))
             {
                 if ($messages->ajouterlike($id_message, $_SESSION['id'])==true)
                 {
-                    echo "like ajoute";
+                    echo "<br>" . "like ajoute". "</form>" . "</td>";
+                    header('Refresh: 0');
                 }
-                else echo "deja vote";
+                else echo "<br>" . "deja vote" . "</form>" . "</td>";
             }
             if (isset($_POST["dislike=$id_message"]))
             {
                 if ($messages->ajouterdislike($id_message, $_SESSION['id'])==true)
                 {
-                    echo "dislike ajoute";
+                    echo "<br>" . "dislike ajoute". "</form>" . "</td>";
+                    header('Refresh: 0');
                 }
-                else echo "deja vote";
+                else echo "<br>" . "deja vote". "</form>" . "</td>";
             }
             if ($_SESSION['status']=='admin') {
                 echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='supp=$id_message' id='supp=$id_message' value='supp. message'>" . "</form>" . "</td>";
