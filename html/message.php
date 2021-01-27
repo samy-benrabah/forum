@@ -3,6 +3,15 @@ session_start();
 require_once '../class/messages.php';
 $messages = new messages();
 
+
+if (isset($_POST['submit_message'])) {
+    if (!empty(trim($_POST['titre_message'])) || !empty(trim($_POST['text_message']))) {
+        $date = date('Y-m-d H:i:s');
+        $id_conversation = $messages->getidConversation();
+        $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
+        header('Refresh: 0');
+    } else echo "Merci de compléter les champs titre et message";
+} ?>
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,16 +99,6 @@ $messages = new messages();
             <label for="ajout-message">Texte:</label>
             <input type="text" name="text_message">
         </div>
-    <?php
-    if (isset($_POST['submit_message']))
-    {
-        if (!empty(trim($_POST['titre_message'])) || !empty(trim($_POST['text_message'])))
-            {
-                $date = date('Y-m-d H:i:s');
-                $id_conversation = $messages->getidConversation();
-                $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
-            } else echo "Merci de compléter les champs titre et message";
-    }?>
     <div class="button-topic">
         <input class="button-topic" name="submit_message" type="submit" value="Ajouter">
     </div>
