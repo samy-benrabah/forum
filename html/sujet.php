@@ -23,7 +23,8 @@ $messages = new messages();
         <li><a href="profil.php">Profil</a></li>
         <li><a href="logout.php">Se déconnecter</a></li>
     </ul>
-    <form method="get" class="header-search-box">
+        <form method="get" class="header-search-box" action="affichage-sujet.php">
+
         <input autocomplete="off" type="search" name="search" class="header-search-input" placeholder="Recherche">
         <i class="fas fa-search"></i>
     </form>

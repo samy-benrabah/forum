@@ -2,21 +2,9 @@
 session_start();
 require_once '../class/messages.php';
 $messages = new messages();
-?>
-<form>
-<?php
-if (isset($_POST['submit_message'])) {
-    if (!empty(trim($_POST['titre_message'])) || !empty(trim($_POST['text_message']))) {
-        $date = date('Y-m-d H:i:s');
-        $id_conversation = $messages->getidConversation();
-        $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
-        header('Refresh: 0');
-    } else {
-        echo "Merci de compléter les champs titre et message";
-    }
 
-}?>
-</form>
+$_SESSION['id_conversation'] = $_GET['id_conversation'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,22 +42,22 @@ if (isset($_POST['submit_message'])) {
     <div class="table_message">
 <table>
     <?php
-    if($messages->afficherMessage($_GET['id_conversation'])==true) {
-        $messages->setidConversation($_GET['id_conversation']);
-        for ($i = 0; isset($messages->allresult_messages[$i]); $i++) {
-            $login = $messages->allresult_messages[$i]['login'];
-            $id = $messages->allresult_messages[$i]['id_utilisateur'];
-            $id_message = $messages->allresult_messages[$i]['id'];
-            echo "<tr class='tr_message'>" . "<td class='td_contenu'>" . "Par: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "</td>";
-            echo "<td class='td_contenu'>" . $messages->allresult_messages[$i]['titre'] . "</td>";
-            echo "<td class='td_message'>" . $messages->allresult_messages[$i]['message'] . "</td>";
-            echo "<td class='td_contenu'>" . "Le: " . $messages->allresult_messages[$i]['date'] . "</td>";
-            echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='J`aime'>" . $messages->afficherlike($id_message) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='Je n`aime pas'>" . $messages->afficherdislike($id_message);
-            if (isset($_POST["like=$id_message"])) {
-                if ($messages->ajouterlike($id_message, $_SESSION['id']) == true) {
-                    echo "<br>" . "like ajoute" . "</form>" . "</td>";
-                    header('Refresh: 0');
-                } else echo "<br>" . "deja vote" . "</form>" . "</td>";
+if ($messages->afficherMessage($_GET['id_conversation']) == true) {
+    $messages->setidConversation($_GET['id_conversation']);
+    for ($i = 0;isset($messages->allresult_messages[$i]); $i++) {
+        $login = $messages->allresult_messages[$i]['login'];
+        $id = $messages->allresult_messages[$i]['id_utilisateur'];
+        $id_message = $messages->allresult_messages[$i]['id'];
+        echo "<tr class='tr_message'>" . "<td class='td_contenu'>" . "Par: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "</td>";
+        echo "<td class='td_contenu'>" . $messages->allresult_messages[$i]['titre'] . "</td>";
+        echo "<td class='td_message'>" . $messages->allresult_messages[$i]['message'] . "</td>";
+        echo "<td class='td_contenu'>" . "Le: " . $messages->allresult_messages[$i]['date'] . "</td>";
+        echo "<td class='td_contenu'>" . "<form method='post'>" . "<button type='submit' name='like=$id_message' id='like=$id_message' ><i class='far fa-thumbs-up'></i></button>" . $messages->afficherlike($id_message) . "<button type='submit' name='like=$id_message' id='like=$id_message' ><i class='far fa-thumbs-down'></i></button>" . $messages->afficherdislike($id_message) . "</form>" . "</td>";
+        if (isset($_POST["like=$id_message"])) {
+            if ($messages->ajouterlike($id_message, $_SESSION['id']) == true) {
+                echo "like ajoute";
+            } else {
+                echo "deja vote";
             }
             if (isset($_POST["dislike=$id_message"])) {
                 if ($messages->ajouterdislike($id_message, $_SESSION['id']) == true) {
@@ -90,10 +78,11 @@ if (isset($_POST['submit_message'])) {
 </div>
     </div>
         <div class="formulaire_message">
-            <form action="" method="post">
+            <form action="refresh-message.php" method="post">
                     <div class="titre-topic">
                         <h1>Ajouter message</h1>
                     </div>
+
                     <div class="ajout-message">
                         <label for="ajout-message">Titre : </label>
                         <input type="text" name="titre_message">
@@ -103,6 +92,19 @@ if (isset($_POST['submit_message'])) {
                         <label for="ajout-message">Texte:</label>
                         <input type="text" name="text_message">
                     </div>
+                    <?php
+if (isset($_POST['submit_message'])) {
+    if (!empty(trim($_POST['titre_message'])) || !empty(trim($_POST['text_message']))) {
+        $date = date('Y-m-d H:i:s');
+        $id_conversation = $messages->getidConversation();
+        $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
+        $_SESSION['page_message'] = "oui";
+
+    } else {
+        echo "Merci de compléter les champs titre et message";
+    }
+
+}?>
                 <div class="button-topic">
                     <input class="button-topic" name="submit_message" type="submit" value="Ajouter">
                 </div>
