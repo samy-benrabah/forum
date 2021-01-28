@@ -14,7 +14,7 @@ $bdd = new PDO('mysql:dbname=forum;host=localhost', "root", "");
 <main class="accueil-global">
 
             <div class="titre-topic">
-                <h1>Topics</h1>
+                <h1>Messages</h1>
             </div>
             <table class="table_topic">
    <?php

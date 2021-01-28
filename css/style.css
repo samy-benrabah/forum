@@ -13,7 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100vh;
+    height: 100%;
 }
 
 header section {
@@ -132,7 +132,7 @@ header a {
 }
 
 header a:hover {
-    text-shadow:  1px 2px 3px rgba(255, 255, 255, 1);
+    text-shadow: 1px 2px 3px rgba(255, 255, 255, 1);
 }
 
 main {
@@ -147,7 +147,7 @@ main {
 }
 
 .accueil-global {
-    background-image: url("../img/bg-accueil.jpg");
+    background-image: url("../img/bg-pages.jpg");
     background-size: cover;
     margin-top: 5px;
     margin-bottom: 3px;
@@ -156,6 +156,7 @@ main {
 .accueil {
     font-family: 'Source Code Pro', monospace;
     margin-top: 3%;
+    margin-bottom: 3%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -167,7 +168,7 @@ main {
     box-shadow: #FFFFFF 1px 1px 5px 2px
 }
 
-.accueil h1{
+.accueil h1 {
     font-family: 'East Sea Dokdo', cursive !important;
     font-size: 65px;
 }
@@ -189,6 +190,7 @@ main {
 
 .full-message {
     width: 90%;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -201,7 +203,7 @@ main {
     flex-direction: row;
 }
 
-.bloc h1{
+.bloc h1 {
     font-family: 'East Sea Dokdo', cursive !important;
     font-size: 65px;
 }
@@ -323,8 +325,8 @@ main.profil {
     border-radius: 1em;
 }
 
-.profil p{
-    font-size: 20px ;
+.profil p {
+    font-size: 20px;
 }
 
 form#modif_profil {
@@ -335,7 +337,7 @@ form#modif_profil {
     justify-content: start;
 }
 
-input#submit_change_status{
+input#submit_change_status {
     margin: 0;
 }
 
@@ -395,27 +397,36 @@ main p {
     font-size: 30px;
 }
 
-.message-global, .sujet-global, .connexion, .inscription{
-    background-image: url("../img/bg-pages.jpg");
-    background-size: cover;
-    margin-top: 5px;
-    margin-bottom: 5px;
+.message-global {
+    height: 100vh;
 }
 
-.sujet-global{
+.message-global,
+.sujet-global,
+.connexion,
+.inscription {
+    background-image: url("../img/bg-pages.jpg");
+    background-size: cover;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.sujet-global {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.form_connexion, .form_inscription{
+.form_connexion,
+.form_inscription {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
-.form_connexion_gauche, .form_inscription_gauche{
+.form_connexion_gauche,
+.form_inscription_gauche {
     border-radius: 1em;
     background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
     box-shadow: #FFFFFF 1px 1px 5px 2px;
@@ -460,7 +471,7 @@ main p {
     margin-top: 4em;
 }
 
-.button p{
+.button p {
     width: 200px;
     font-size: 14px;
 }
@@ -491,7 +502,8 @@ main p {
     justify-content: center;
 }
 
-main input[type=submit], button {
+main input[type=submit],
+button {
     font-family: 'Source Code Pro', monospace;
     color: yellowgreen;
     border-radius: 1em;
@@ -503,22 +515,23 @@ main input[type=submit], button {
     margin-top: 1em;
 }
 
-main input[type=submit]:hover, button:hover {
+main input[type=submit]:hover,
+button:hover {
     box-shadow: 0px 0px 10px 2px rgba(43, 255, 43, 1);
 }
 
-button a{
+button a {
     text-decoration: none;
     margin-top: 0;
     color: yellowgreen;
 }
 
-.logout{
+.logout {
     width: 130px;
 }
 
 .affich_message {
-    height: 70%;
+    height: 60%;
     width: 100%;
     margin-bottom: 20px;
     margin-top: 20px;
@@ -572,7 +585,7 @@ button a{
 .table_message {
     overflow-y: scroll;
     width: 100%;
-    height: 82%;
+    height: 75%;
     display: flex;
     align-self: center;
 }
@@ -611,7 +624,8 @@ a {
     overflow-y: scroll;
 }
 
-.td_message, .td_contenu {
+.td_message,
+.td_contenu {
     font-size: 15px;
 }
 
@@ -629,9 +643,11 @@ a {
     width: 500px;
     box-shadow: 0px 0px 10px 2px rgba(43, 255, 43, 1);
     border-radius: 1em;
+    margin-left: 20px;
 }
 
-.ajout-message, .ajout-sujet {
+.ajout-message,
+.ajout-sujet {
     font-family: 'Source Code Pro', monospace;
     font-size: 15px;
     margin-top: 10px;
