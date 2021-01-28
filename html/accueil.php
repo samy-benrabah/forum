@@ -32,7 +32,7 @@ $articles = '';
         <li><a href="connexion.php">Connexion</a></li>
         <li><a href="profil.php">Profil</a></li>
     </ul>
-    <form method="get" class="header-search-box" action="affichage-test.php">
+    <form method="get" class="header-search-box" action="affichage-topic.php">
         <input autocomplete="off" type="search" name="search" class="header-search-input" placeholder="Recherche">
         <button type="submit" name="submit" >
             <i class="fa fa-search" color = "blue"></i></button>
@@ -43,11 +43,14 @@ $articles = '';
         <p><b>Bienvenue sur le forum Dev.Help</b></br> Le forum d'entraide
             des developpeurs que tu sois plutot front , back ou full!!
         <?php
-        if (isset($_SESSION['login']) && $_SESSION["visite"] != "oui") {?>
+if (isset($_SESSION['login']) && $_SESSION["visite"] != "oui") {?>
         <br> Nombre de visiteurs depuis la creation de ce forum :
            <?php echo $compteur->afficher_compteur(); ?>!
             <?php $_SESSION["visite"] = "oui";
-        } else?></p>
+} else {
+    ;
+}
+?></p>
         <div class="full-topic">
             <div class="topic">
                 <div class="titre-topic">
@@ -55,53 +58,50 @@ $articles = '';
                 </div>
                 <table class="table_topic">
                     <?php
-                    if ($messages->afficherTopic()==true)
-                    {
-                        if (!isset($_SESSION['login']))
-                        {
-                            $messages->afficherTopicpublic();
-                            for ($i=0;isset($messages->allresult_topic_public[$i]);$i++){
-                                $id_topic=$messages->allresult_topic_public[$i]['id'];
-                                echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_public[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
-                            }
-                        }
-                        if (isset($_SESSION['status']) AND $_SESSION['status']=='membre')
-                        {
-                            $messages->afficherTopicmembres();
-                            for ($i=0;isset($messages->allresult_topic_membres[$i]);$i++){
-                                $id_topic=$messages->allresult_topic_membres[$i]['id'];
-                                echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_membres[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
-                            }
-                        }
-                        if (isset($_SESSION['status']))
-                        {
-                            if ($_SESSION['status']=='admin' || $_SESSION['status']=='mod') {
-                                for ($i = 0; isset($messages->allresult_topic[$i]); $i++) {
-                                    $id_topic = $messages->allresult_topic[$i]['id'];
-                                    echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
-                                }
-                            }
-                        }
+if ($messages->afficherTopic() == true) {
+    if (!isset($_SESSION['login'])) {
+        $messages->afficherTopicpublic();
+        for ($i = 0;isset($messages->allresult_topic_public[$i]); $i++) {
+            $id_topic = $messages->allresult_topic_public[$i]['id'];
+            echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_public[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
+        }
+    }
+    if (isset($_SESSION['status']) and $_SESSION['status'] == 'membre') {
+        $messages->afficherTopicmembres();
+        for ($i = 0;isset($messages->allresult_topic_membres[$i]); $i++) {
+            $id_topic = $messages->allresult_topic_membres[$i]['id'];
+            echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_membres[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
+        }
+    }
+    if (isset($_SESSION['status'])) {
+        if ($_SESSION['status'] == 'admin' || $_SESSION['status'] == 'mod') {
+            for ($i = 0;isset($messages->allresult_topic[$i]); $i++) {
+                $id_topic = $messages->allresult_topic[$i]['id'];
+                echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
+            }
+        }
+    }
 
-                    } else "Aucun topic à afficher";
-                    ?>
+} else {
+    "Aucun topic à afficher";
+}
+
+?>
                 </table>
                 <?php
-                if (isset($_SESSION['status']))
-                {
-                    if ($_SESSION['status']=='admin' || $_SESSION['status']=='mod')
-                    {
-                        echo'<form action="" method="post">
+if (isset($_SESSION['status'])) {
+    if ($_SESSION['status'] == 'admin' || $_SESSION['status'] == 'mod') {
+        echo '<form action="" method="post">
                 <div class="button-topic">
                     <input class="button-topic" name="button_topic" id="button_topic" type="submit" value="Ajouter">
                 </div>';
-                    }
-                }
-                ?>
+    }
+}
+?>
             </div>
         <?php
-        if (isset($_POST['button_topic'])) {
-            echo '<div class="formulaire">
+if (isset($_POST['button_topic'])) {
+    echo '<div class="formulaire">
         <div class="titre-topic">
             <h1>Ajouter un topic</h1>
         </div>
@@ -117,12 +117,15 @@ $articles = '';
                 <option value="admin">Administrateur</option>
             </select>
             <input type="submit" value="Valider" name="submit_topic" id="submit_topic">';
-            }
-            if (isset($_POST['submit_topic'])) {
-                if (!empty(trim($_POST['submit_topic']))) {
-                    echo $messages->ajouterTopic($_POST['titre_topic'], $_SESSION['login'], $_POST['modif_access']);
-                } else echo "Merci de completer le titre du topic";
-            } ?>
+}
+if (isset($_POST['submit_topic'])) {
+    if (!empty(trim($_POST['submit_topic']))) {
+        echo $messages->ajouterTopic($_POST['titre_topic'], $_SESSION['login'], $_POST['modif_access']);
+    } else {
+        echo "Merci de completer le titre du topic";
+    }
+
+}?>
     </div>
 </main>
 <footer>
