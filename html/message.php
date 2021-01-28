@@ -32,6 +32,11 @@ if (isset($_POST['submit_message'])) {
         <img src="../image/logo.black.svg">
         <h1>Dev<span class="header-span-title">.Help</span></h1>
     </div>
+    <ul>
+        <li><a href="accueil.php">Accueil</a></li>
+        <li><a href="profil.php">Profil</a></li>
+        <li><a href="logout.php">Se déconnecter</a></li>
+    </ul>
     <form method="get" class="header-search-box">
         <input autocomplete="off" type="search" name="search" class="header-search-input" placeholder="Recherche">
         <i class="fas fa-search"></i>
@@ -49,47 +54,38 @@ if (isset($_POST['submit_message'])) {
     <div class="table_message">
 <table>
     <?php
-    if($messages->afficherMessage($_GET['id_conversation'])==true)
-    {
+    if($messages->afficherMessage($_GET['id_conversation'])==true) {
         $messages->setidConversation($_GET['id_conversation']);
-        for ($i=0; isset($messages->allresult_messages[$i]); $i++){
+        for ($i = 0; isset($messages->allresult_messages[$i]); $i++) {
             $login = $messages->allresult_messages[$i]['login'];
             $id = $messages->allresult_messages[$i]['id_utilisateur'];
-            $id_message=$messages->allresult_messages[$i]['id'];
+            $id_message = $messages->allresult_messages[$i]['id'];
             echo "<tr class='tr_message'>" . "<td class='td_contenu'>" . "Par: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "</td>";
             echo "<td class='td_contenu'>" . $messages->allresult_messages[$i]['titre'] . "</td>";
             echo "<td class='td_message'>" . $messages->allresult_messages[$i]['message'] . "</td>";
             echo "<td class='td_contenu'>" . "Le: " . $messages->allresult_messages[$i]['date'] . "</td>";
             echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='like=$id_message' id='like=$id_message' value='J`aime'>" . $messages->afficherlike($id_message) . "<input type='submit' name='dislike=$id_message' id='dislike=$id_message' value='Je n`aime pas'>" . $messages->afficherdislike($id_message);
-            if (isset($_POST["like=$id_message"]))
-            {
-                if ($messages->ajouterlike($id_message, $_SESSION['id'])==true)
-                {
-                    echo "<br>" . "like ajoute". "</form>" . "</td>";
+            if (isset($_POST["like=$id_message"])) {
+                if ($messages->ajouterlike($id_message, $_SESSION['id']) == true) {
+                    echo "<br>" . "like ajoute" . "</form>" . "</td>";
                     header('Refresh: 0');
-                }
-                else echo "<br>" . "deja vote" . "</form>" . "</td>";
+                } else echo "<br>" . "deja vote" . "</form>" . "</td>";
             }
-            if (isset($_POST["dislike=$id_message"]))
-            {
-                if ($messages->ajouterdislike($id_message, $_SESSION['id'])==true)
-                {
-                    echo "<br>" . "dislike ajoute". "</form>" . "</td>";
+            if (isset($_POST["dislike=$id_message"])) {
+                if ($messages->ajouterdislike($id_message, $_SESSION['id']) == true) {
+                    echo "<br>" . "dislike ajoute" . "</form>" . "</td>";
                     header('Refresh: 0');
-                }
-                else echo "<br>" . "deja vote". "</form>" . "</td>";
+                } else echo "<br>" . "deja vote" . "</form>" . "</td>";
             }
-
-        }
-        if ($_SESSION['status'] == 'admin') {
-            echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='supp=$id_message' id='supp=$id_message' value='supp. message'>" . "</form>" . "</td>";
-            if (isset($_POST["supp=$id_message"])) {
-                $messages->supprimerMessage($id_message);
+            if ($_SESSION['status'] == 'admin') {
+                echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='supp=$id_message' id='supp=$id_message' value='supp. message'>" . "</form>" . "</td>";
+                if (isset($_POST["supp=$id_message"])) {
+                    $messages->supprimerMessage($id_message);
+                }
             }
         }
     }
-    echo "</tr>";
-}?>
+?>
 </table>
 </div>
     </div>

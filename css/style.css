@@ -116,8 +116,27 @@ header i {
     border: none;
 }
 
+li {
+    float: left;
+    list-style: none;
+}
+
+header a {
+    display: block;
+    padding: 8px;
+    margin-left: 50px;
+    text-decoration: none;
+    color: white;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 20px;
+}
+
+header a:hover {
+    text-shadow:  1px 2px 3px rgba(255, 255, 255, 1);
+}
+
 main {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -148,7 +167,7 @@ main {
     box-shadow: #FFFFFF 1px 1px 5px 2px
 }
 
-.accueil h1 {
+.accueil h1{
     font-family: 'East Sea Dokdo', cursive !important;
     font-size: 65px;
 }
@@ -182,16 +201,29 @@ main {
     flex-direction: row;
 }
 
+.bloc h1{
+    font-family: 'East Sea Dokdo', cursive !important;
+    font-size: 65px;
+}
+
 .bloc {
-    height: 400px;
-    width: 300px;
+    margin-top: 30px;
+    height: 370px;
+    width: 350px;
     transition: 0.5s;
     color: white;
     border-radius: 1em;
+    box-shadow: 0px 0px 10px 2px rgba(43, 255, 43, 1);
+    font-family: 'Source Code Pro', monospace;
 }
 
 .bloc:hover {
     box-shadow: -1px -1px 12px 15px rgba(31, 209, 31, 1);
+}
+
+.bloc .form label {
+    font-family: 'Source Code Pro', monospace;
+    width: 130px;
 }
 
 .bloc-profil {
@@ -236,14 +268,17 @@ main {
 
 .bloc_error {
     height: 150px;
-    width: 350px;
+    width: 40%;
     border-radius: 1em;
-    font-size: 30px;
+    margin-left: 50px;
 }
 
 .error_message {
     color: red;
-    font-size: 25px;
+    font-size: 20px;
+    width: 100%;
+    font-family: 'Source Code Pro', monospace;
+    margin-left: 15px;
 }
 
 .form {
@@ -262,13 +297,8 @@ main label {
 }
 
 main label.profil {
-    align-self: start;
     width: 50%;
-}
-
-form#modif_profil {
-    display: flex;
-    flex-direction: row;
+    font-size: 20px;
 }
 
 select#modif_status {
@@ -279,6 +309,7 @@ select#modif_status {
 main.profil {
     height: 100%;
     width: 50%;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -287,12 +318,25 @@ main.profil {
     align-self: center;
     align-items: start;
     font-size: 25px;
+    font-family: 'Source Code Pro', monospace;
+    box-shadow: 0px 0px 10px 2px rgba(43, 255, 43, 1);
+    border-radius: 1em;
+}
+
+.profil p{
+    font-size: 20px ;
 }
 
 form#modif_profil {
-    width: 80%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
     margin-bottom: 2%;
-    align-self: center;
+    justify-content: start;
+}
+
+input#submit_change_status{
+    margin: 0;
 }
 
 select#modif_status {
@@ -301,7 +345,10 @@ select#modif_status {
 
 form.delete_profil {
     align-self: center;
-    width: 50%;
+    width: 100%;
+    margin-bottom: 15px;
+    margin-left: 15px;
+    font-size: 20px;
 }
 
 input#submit_delete_user {
@@ -310,7 +357,7 @@ input#submit_delete_user {
 
 main input[type=text] {
     place-self: center;
-    background: black;
+    background: none;
     border: none;
     color: white;
     transition: 0.3s;
@@ -322,7 +369,7 @@ main input[type=text]:hover {
 
 main input[type=password] {
     place-self: center;
-    background: black;
+    background: none;
     border: none;
     color: white;
     transition: 0.3s;
@@ -334,7 +381,7 @@ main input[type=password]:hover {
 
 main input[type=email] {
     place-self: center;
-    background: black;
+    background: none;
     border: none;
     color: white;
     transition: 0.3s;
@@ -346,6 +393,35 @@ main input[type=email]:hover {
 
 main p {
     font-size: 30px;
+}
+
+.message-global, .sujet-global, .connexion, .inscription{
+    background-image: url("../img/bg-pages.jpg");
+    background-size: cover;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.sujet-global{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_connexion, .form_inscription{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_connexion_gauche, .form_inscription_gauche{
+    border-radius: 1em;
+    background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+    box-shadow: #FFFFFF 1px 1px 5px 2px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
 }
 
 .login {
@@ -380,7 +456,13 @@ main p {
 .button {
     display: flex;
     justify-content: center;
+    align-items: baseline;
     margin-top: 4em;
+}
+
+.button p{
+    width: 200px;
+    font-size: 14px;
 }
 
 .button-inscription {
@@ -397,9 +479,10 @@ main p {
 }
 
 .button-topic {
-    margin-top: 15px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .button-message {
@@ -408,7 +491,7 @@ main p {
     justify-content: center;
 }
 
-main input[type=submit] {
+main input[type=submit], button {
     font-family: 'Source Code Pro', monospace;
     color: yellowgreen;
     border-radius: 1em;
@@ -420,15 +503,29 @@ main input[type=submit] {
     margin-top: 1em;
 }
 
-main input[type=submit]:hover {
+main input[type=submit]:hover, button:hover {
     box-shadow: 0px 0px 10px 2px rgba(43, 255, 43, 1);
+}
+
+button a{
+    text-decoration: none;
+    margin-top: 0;
+    color: yellowgreen;
+}
+
+.logout{
+    width: 130px;
 }
 
 .affich_message {
     height: 70%;
     width: 100%;
+    margin-bottom: 20px;
+    margin-top: 20px;
     border: solid 2px greenyellow;
     border-radius: 1em;
+    background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+    box-shadow: #FFFFFF 1px 1px 5px 2px
 }
 
 .full-sujet {
@@ -436,24 +533,30 @@ main input[type=submit]:hover {
     flex-direction: row;
     justify-content: space-around;
     width: 70%;
-    height: auto;
+    height: 70%;
+    border-radius: 1em;
+    background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+    box-shadow: #FFFFFF 1px 1px 5px 2px;
+    padding: 30px;
 }
 
 .topic,
 .sujet {
-    height: 450px;
+    height: 500px;
     width: 300px;
     border-radius: 1em;
     box-shadow: 0px 0px 10px 2px rgba(43, 255, 43, 1);
 }
 
 .titre-topic {
-    font-size: 12px;
+    font-family: 'East Sea Dokdo', cursive !important;
+    font-size: 15px;
     border-bottom: rgba(43, 255, 43, 1) 2px solid;
 }
 
 .titre-sujet {
     border-bottom: rgb(255, 123, 0) 2px solid;
+    font-family: 'Source Code Pro', monospace;
 }
 
 .table_topic,
@@ -463,7 +566,7 @@ main input[type=submit]:hover {
     height: 350px;
     display: flex;
     align-self: center;
-    /* border-bottom: rgba(43, 255, 43, 1) 2px solid; */
+    font-family: 'Source Code Pro', monospace;
 }
 
 .table_message {
@@ -500,6 +603,7 @@ a {
 .tr_message {
     width: 100%;
     height: 110px;
+    font-family: 'Source Code Pro', monospace;
 }
 
 .td_message {
@@ -507,18 +611,30 @@ a {
     overflow-y: scroll;
 }
 
+.td_message, .td_contenu {
+    font-size: 15px;
+}
+
 .formulaire_message {
-    height: 25%;
     width: 100%;
-    border: solid 2px greenyellow;
+    margin-bottom: 30px;
     border-radius: 1em;
+    background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+    box-shadow: #FFFFFF 1px 1px 5px 2px;
+    border: solid 2px greenyellow;
 }
 
 .formulaire {
-    height: 250px;
+    height: 200px;
     width: 500px;
-    border: solid 2px greenyellow;
+    box-shadow: 0px 0px 10px 2px rgba(43, 255, 43, 1);
     border-radius: 1em;
+}
+
+.ajout-message, .ajout-sujet {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 15px;
+    margin-top: 10px;
 }
 
 main table {

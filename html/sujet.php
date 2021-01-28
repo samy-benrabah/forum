@@ -18,6 +18,11 @@ $messages = new messages();
         <img src="../image/logo.black.svg">
         <h1>Dev<span class="header-span-title">.Help</span></h1>
     </div>
+    <ul>
+        <li><a href="accueil.php">Accueil</a></li>
+        <li><a href="profil.php">Profil</a></li>
+        <li><a href="logout.php">Se déconnecter</a></li>
+    </ul>
     <form method="get" class="header-search-box">
         <input autocomplete="off" type="search" name="search" class="header-search-input" placeholder="Recherche">
         <i class="fas fa-search"></i>
@@ -25,59 +30,51 @@ $messages = new messages();
 </header>
 <main class="sujet-global">
     <div class="full-sujet">
-<div class="sujet">
-<div class="titre-topic">
-        <h1><?php echo $messages->titreTopic($_GET['id_topic']) ?></h1>
-    </div>
-    <div class="titre-sujet">
-        <h2> Sujets</h2>
-    </div>
-    <table class="table_sujet">
-    <tr>
-            <?php
-            if($messages->afficherConversation($_GET['id_topic'])==true)
-            {
-                for ($i=0;isset($messages->allresult_conversation[$i]);$i++){
-                    $id_conversation=$messages->allresult_conversation[$i]['id'];
-                    echo "<tr>" . "<td>" . "<p>" . "<a href='message.php?id_conversation=$id_conversation'>" . $messages->allresult_conversation[$i]['nom_conversation'] . "</a>" . "</p>" . "</td>" . "</tr>";
+        <div class="sujet">
+            <div class="titre-topic">
+                <h1><?php echo $messages->titreTopic($_GET['id_topic']) ?></h1>
+            </div>
+        <div class="titre-sujet">
+            <h2> Sujets</h2>
+        </div>
+        <table class="table_sujet">
+            <tr>
+                <?php
+                if($messages->afficherConversation($_GET['id_topic'])==true)
+                {
+                    for ($i=0;isset($messages->allresult_conversation[$i]);$i++){
+                        $id_conversation=$messages->allresult_conversation[$i]['id'];
+                        echo "<tr>" . "<td>" . "<p>" . "<a href='message.php?id_conversation=$id_conversation'>" . $messages->allresult_conversation[$i]['nom_conversation'] . "</a>" . "</p>" . "</td>" . "</tr>";
+                    }
                 }
-            }
-            ?>
-    </tr>
-    </table>
-
-
+                ?>
+            </tr>
+        </table>
     </div>
-
-    <div class="formulaire-sujet">
-
+    <div class="formulaire">
         <div class="titre-topic">
             <h1>Ajouter un sujet</h1>
         </div>
-<form method="post">
-    <div class="ajout-sujet">
-   <label for="ajout-sujet">Titre : </label>
-    <input type="text" name="titre_conv">
-   </div>
-<div class="button-topic">
-    <input class="button-topic" type="submit" name="submit_new_conv" value="Ajouter">
-    </div>
-</form>
+        <form method="post">
+            <div class="ajout-sujet">
+                <label for="ajout-sujet">Titre : </label>
+                <input type="text" name="titre_conv">
+            </div>
+            <div class="button-topic">
+                <input class="button-topic" type="submit" name="submit_new_conv" value="Ajouter">
+            </div>
+        <?php
+    if (isset($_POST['submit_new_conv'])) {
+        if (!empty($_POST['titre_conv'])) {
+            $titre = $_POST['titre_conv'];
+            echo "<div class='msg_titre_topic'>" . $messages->ajouterConversation($titre, $_SESSION['login'], $_GET['id_topic']) . "</div>";
+        } else {
+            echo "<div class='msg_titre_topic'>" . "<p>" . "Merci de compléter le titre du sujet" . "</p>" . "</div>";
+        }
 
-    <?php
-if (isset($_POST['submit_new_conv'])) {
-    if (!empty($_POST['titre_conv'])) {
-        $titre = $_POST['titre_conv'];
-        echo "<div class='msg_titre_topic'>" . $messages->ajouterConversation($titre, $_SESSION['login'], $_GET['id_topic']) . "</div>";
-    } else {
-        echo "<div class='msg_titre_topic'>" . "<p>" . "Merci de compléter le titre du sujet" . "</p>" . "</div>";
     }
-
-}
 ?>
-    </form>
-    </div>
-    </div>
+        </form>
     </div>
 </main>
 <footer>
@@ -92,9 +89,7 @@ if (isset($_POST['submit_new_conv'])) {
     <a href="">Connexion</a>
     <a href="">Inscription</a>
     </div>
-
     </section>
-
 </footer>
 </body>
 </html>
