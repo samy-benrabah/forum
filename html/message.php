@@ -11,10 +11,12 @@ if (isset($_POST['submit_message'])) {
         $id_conversation = $messages->getidConversation();
         $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
         header('Refresh: 0');
-    } else echo "Merci de compléter les champs titre et message";
-} ?>
+    } else {
+        echo "Merci de compléter les champs titre et message";
+    }
+
+}?>
 </form>
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,14 +79,17 @@ if (isset($_POST['submit_message'])) {
                 }
                 else echo "<br>" . "deja vote". "</form>" . "</td>";
             }
-            if ($_SESSION['status']=='admin') {
-                echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='supp=$id_message' id='supp=$id_message' value='supp. message'>" . "</form>" . "</td>";
-                if (isset($_POST["supp=$id_message"])){
-                    $messages->supprimerMessage($id_message);
-                }
+
+        }
+        if ($_SESSION['status'] == 'admin') {
+            echo "<td class='td_contenu'>" . "<form method='post'>" . "<input type='submit' name='supp=$id_message' id='supp=$id_message' value='supp. message'>" . "</form>" . "</td>";
+            if (isset($_POST["supp=$id_message"])) {
+                $messages->supprimerMessage($id_message);
             }
-        } echo "</tr>";
-    }?>
+        }
+    }
+    echo "</tr>";
+}?>
 </table>
 </div>
     </div>
@@ -102,16 +107,6 @@ if (isset($_POST['submit_message'])) {
                         <label for="ajout-message">Texte:</label>
                         <input type="text" name="text_message">
                     </div>
-                <?php
-                if (isset($_POST['submit_message']))
-                {
-                    if (!empty(trim($_POST['titre_message'])) || !empty(trim($_POST['text_message'])))
-                        {
-                            $date = date('Y-m-d H:i:s');
-                            $id_conversation = $messages->getidConversation();
-                            $messages->ajouterMessage($_POST['titre_message'], $_POST['text_message'], $id_conversation, $_SESSION['id'], $_SESSION['login']);
-                        } else echo "Merci de compléter les champs titre et message";
-                }?>
                 <div class="button-topic">
                     <input class="button-topic" name="submit_message" type="submit" value="Ajouter">
                 </div>
