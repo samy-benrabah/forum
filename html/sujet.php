@@ -41,13 +41,15 @@ $messages = new messages();
         <table class="table_sujet">
             <tr>
                 <?php
-if ($messages->afficherConversation($_GET['id_topic']) == true) {
-    for ($i = 0;isset($messages->allresult_conversation[$i]); $i++) {
-        $id_conversation = $messages->allresult_conversation[$i]['id'];
-        echo "<tr>" . "<td>" . "<p>" . "<a href='message.php?id_conversation=$id_conversation'>" . $messages->allresult_conversation[$i]['nom_conversation'] . "</a>" . "</p>" . "</td>" . "</tr>";
-    }
-}
-?>
+                if(isset($_SESSION['login'])){
+                    if ($messages->afficherConversation($_GET['id_topic']) == true) {
+                        for ($i = 0;isset($messages->allresult_conversation[$i]); $i++) {
+                            $id_conversation = $messages->allresult_conversation[$i]['id'];
+                            echo "<tr>" . "<td>" . "<p>" . "<a href='message.php?id_conversation=$id_conversation'>" . $messages->allresult_conversation[$i]['nom_conversation'] . "</a>" . "</p>" . "</td>" . "</tr>";
+                        }
+                    }
+                } else echo "<tr>" . "<td>" . "<p>" . "Merci de vous connecter pour voir les sujets" . "<p>" . "</td>" . "</tr>" 
+                ?>
             </tr>
         </table>
     </div>
@@ -60,21 +62,22 @@ if ($messages->afficherConversation($_GET['id_topic']) == true) {
                 <label for="ajout-sujet">Titre : </label>
                 <input type="text" name="titre_conv">
             </div>
-            <div class="button-topic">
+            <?php if(isset($_SESSION['login'])){
+            echo '<div class="button-topic">
                 <input class="button-topic" type="submit" name="submit_new_conv" value="Ajouter">
-            </div>
-        <?php
-if (isset($_POST['submit_new_conv'])) {
-    if (!empty($_POST['titre_conv'])) {
-        $titre = $_POST['titre_conv'];
-        header('Refresh:0');
-        echo "<div class='msg_titre_topic'>" . $messages->ajouterConversation($titre, $_SESSION['login'], $_GET['id_topic']) . "</div>";
-    } else {
-        echo "<div class='msg_titre_topic'>" . "<p>" . "Merci de compléter le titre du sujet" . "</p>" . "</div>";
-    }
+            </div>';
+            }
+            if (isset($_POST['submit_new_conv'])) {
+                if (!empty($_POST['titre_conv'])) {
+                    $titre = $_POST['titre_conv'];
+                    header('Refresh:0');
+                    echo "<div class='msg_titre_topic'>" . $messages->ajouterConversation($titre, $_SESSION['login'], $_GET['id_topic']) . "</div>";
+                } else {
+                    echo "<div class='msg_titre_topic'>" . "<p>" . "Merci de compléter le titre du sujet" . "</p>" . "</div>";
+                }
 
-}
-?>
+            }
+            ?>
         </form>
     </div>
 </main>

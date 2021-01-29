@@ -31,6 +31,7 @@ $admin = new admin();
 <main class="profil">
     <h2><u>Infos profil:</u></h2>
     <?php
+    if (isset($_GET['id']) || isset($_SESSION['id'])){
     if (isset($_GET['id'])) {
         if ($user->afficherProfil($_GET['id']) == true) {
             echo "<div>" . "<p>" . "Login: " . $user->user_info[0]['login'] . "</p>" . "<br>";
@@ -89,14 +90,18 @@ $admin = new admin();
             echo "le profil a été supprimé";
         }
     }
-    }?>
-    </form>
-<div class="bloc-avatar">
-    <img src="<?=$_SESSION['avatar']?>" alt="picture">
-    <form action="upload.php" method="post" enctype="multipart/form-data">
-    <input type="file" name="picture" >
-    <input type="submit" name ="upload" value="Upload">
-</div>
+    }
+?>
+        </form>
+    <div class="bloc-avatar">
+        <img src="<?=$_SESSION['avatar']?>" alt="picture">
+        <form action="upload.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="picture" >
+        <input type="submit" name ="upload" value="Upload">
+    </div>
+<?php
+} else echo "Merci de vous connecter avant de consulter le profil";
+?>
 </main>
 <footer>
     <section>

@@ -223,6 +223,7 @@ class user
             $allresult = $query->fetch(PDO::FETCH_ASSOC);
             $this->user_info[]=$allresult;
             return true;
+            echo var_dump($allresult);
         } else {
             return false;
         }

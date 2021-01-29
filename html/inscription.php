@@ -44,7 +44,6 @@ $user = new user();
                <label for="email"  >Email :</label>
                 <input type="email" name="email">
                </div>
-
                 </div>
                 <div class="button-inscription">
                     <?php
