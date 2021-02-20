@@ -22,7 +22,7 @@ $admin = new admin();
         <h1>Dev<span class="header-span-title">.Help</span></h1>
     </div>
     <ul>
-        <li><a href="accueil.php">Accueil</a></li>
+        <li><a href="../index.php">Accueil</a></li>
         <li><a href="inscription.php">Inscription</a></li>
         <li><a href="connexion.php">Connexion</a></li>
         <li><a href="profil.php">Profil</a></li>
@@ -31,7 +31,7 @@ $admin = new admin();
 <main class="profil">
     <h2><u>Infos profil:</u></h2>
     <?php
-    if (isset($_GET['id']) || isset($_SESSION['id'])){
+if (isset($_GET['id']) || isset($_SESSION['id'])) {
     if (isset($_GET['id'])) {
         if ($user->afficherProfil($_GET['id']) == true) {
             echo "<div>" . "<p>" . "Login: " . $user->user_info[0]['login'] . "</p>" . "<br>";
@@ -40,7 +40,7 @@ $admin = new admin();
             echo "<p>" . "Date d'inscription : " . $user->user_info[0]['date_inscription'] . "</p>" . "<br>";
             echo "<p>" . "Nombre de messages envoyes : " . $user->nbmessages($_SESSION['id']) . "</p>" . "<br>" . "</div>";
         }
-    }else {
+    } else {
         $user->afficherProfil($_SESSION['id']);
         echo "<div>" . "<p>" . "Login: " . $user->user_info[0]['login'] . "</p>" . "<br>";
         echo "<p>" . "Email : " . $user->user_info[0]['email'] . "</p>" . "<br>";
@@ -49,9 +49,8 @@ $admin = new admin();
         echo "<p>" . "Nombre de messages envoyes : " . $user->nbmessages($_SESSION['id']) . "</p>" . "<br>" . "</div>";
     }
 
-        if ($_SESSION['status']=='admin')
-        {
-    ?>
+    if ($_SESSION['status'] == 'admin') {
+        ?>
     <h2><u>Espace admin :</u></h2>
     <form method="post" name="modif_profil" id="modif_profil">
     <label class="profil" for="modif_status">Modifier le statut du membre :</label>
@@ -64,34 +63,31 @@ $admin = new admin();
         <input type="submit" value="Valider" name="submit_change_status" id="submit_change_status">
     </form>
     <?php
-    if (isset($_POST['submit_change_status']))
-    {
-        $admin->changeStatus($_POST['modif_status'], $_GET['id']);
-        echo "Le statut à bien été modifié";
-    }
-    ?>
+if (isset($_POST['submit_change_status'])) {
+            $admin->changeStatus($_POST['modif_status'], $_GET['id']);
+            echo "Le statut à bien été modifié";
+        }
+        ?>
     <form class="delete_profil" method="post">
         <input type="checkbox" name="delete_profile" id="delete_profile"> Supprimer le profil </input>
         <input type="submit" value="Valider" name="submit_delete_user" id="submit_delete_user">
 
     <?php
-    if (isset($_POST['submit_delete_user']))
-    {
-        echo "Etes-vous sûr de vouloir supprimer le profil? (le profil ne pourra pas être récuperé ulterierement)" . "<br>";
-        echo "<input type='checkbox' value='check_delete' name='check_delete' id='check_delete'> Oui, je confirme <input type='submit' value='valider' name='confirm_delete' id='confirm_delete'>";
-        var_dump($_GET['id']);
-    }
-    if (isset($_POST['confirm_delete']))
-    {
-        if (isset($_POST['check_delete'])) {
-            var_dump($_POST['check_delete']);
-            var_dump($_POST['confirm_delete']);
-            $admin->deleteUser($_GET['id']);
-            echo "le profil a été supprimé";
+if (isset($_POST['submit_delete_user'])) {
+            echo "Etes-vous sûr de vouloir supprimer le profil? (le profil ne pourra pas être récuperé ulterierement)" . "<br>";
+            echo "<input type='checkbox' value='check_delete' name='check_delete' id='check_delete'> Oui, je confirme <input type='submit' value='valider' name='confirm_delete' id='confirm_delete'>";
+            var_dump($_GET['id']);
+        }
+        if (isset($_POST['confirm_delete'])) {
+            if (isset($_POST['check_delete'])) {
+                var_dump($_POST['check_delete']);
+                var_dump($_POST['confirm_delete']);
+                $admin->deleteUser($_GET['id']);
+                echo "le profil a été supprimé";
+            }
         }
     }
-    }
-?>
+    ?>
         </form>
     <div class="bloc-avatar">
         <img src="<?=$_SESSION['avatar']?>" alt="picture">
@@ -100,7 +96,10 @@ $admin = new admin();
         <input type="submit" name ="upload" value="Upload">
     </div>
 <?php
-} else echo "Merci de vous connecter avant de consulter le profil";
+} else {
+    echo "Merci de vous connecter avant de consulter le profil";
+}
+
 ?>
 </main>
 <footer>

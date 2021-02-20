@@ -17,7 +17,7 @@ $bdd = new PDO('mysql:dbname=forum;host=localhost', "root", "");
         <h1>Dev<span class="header-span-title">.Help</span></h1>
     </div>
     <ul>
-        <li><a href="accueil.php">Accueil</a></li>
+        <li><a href="../index.php">Accueil</a></li>
         <li><a href="profil.php">Profil</a></li>
         <li><a href="logout.php">Se déconnecter</a></li>
     </ul>
@@ -29,7 +29,7 @@ $bdd = new PDO('mysql:dbname=forum;host=localhost', "root", "");
 <main class="accueil-recherche">
 
             <div class="titre-topic-recherche">
-            <h1>Resultats de la recherche de Sujets <br> correspondant a: <?php echo $_GET['search'];?></h1>
+            <h1>Resultats de la recherche de Sujets <br> correspondant a: <?php echo $_GET['search']; ?></h1>
             </div>
             <table class="table_topic_recherche">
    <?php

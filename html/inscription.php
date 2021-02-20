@@ -20,7 +20,7 @@ $user = new user();
         <h1>Dev<span class="header-span-title">.Help</span></h1>
     </div>
     <ul>
-        <li><a href="accueil.php">Accueil</a></li>
+        <li><a href="../index.php">Accueil</a></li>
         <li><a href="inscription.php">Inscription</a></li>
         <li><a href="connexion.php">Connexion</a></li>
         <li><a href="profil.php">Profil</a></li>
@@ -47,21 +47,19 @@ $user = new user();
                 </div>
                 <div class="button-inscription">
                     <?php
-                    if (isset($_COOKIE['mail']) || isset($_SESSION['login'])) {
-                    echo "Vous etes deja connecte" . "<br>";
-                    echo "<button><a href='logout.php'>Se déconnecter</a></button>";
-                    } else {
-                echo "<input name='submit_register' type='submit' value='valider'>" . "</div>";
-                    }
-               ?>
+if (isset($_COOKIE['mail']) || isset($_SESSION['login'])) {
+    echo "Vous etes deja connecte" . "<br>";
+    echo "<button><a href='logout.php'>Se déconnecter</a></button>";
+} else {
+    echo "<input name='submit_register' type='submit' value='valider'>" . "</div>";
+}
+?>
             </form>
             </div>
         <?php
-if (isset($_POST['submit_register']))
-{
+if (isset($_POST['submit_register'])) {
 
-    if ($user->register($_POST['login'], $_POST['password'], $_POST['email']) == true)
-    {?>
+    if ($user->register($_POST['login'], $_POST['password'], $_POST['email']) == true) {?>
     <div class="bloc_error">
 <?php
 echo "Bonjour, votre profil à bien ete cree" . "<br>";
@@ -69,12 +67,11 @@ echo "Bonjour, votre profil à bien ete cree" . "<br>";
         echo "Votre email :" . " " . $user->getEmail() . "<br>";
         echo "Vous allez etre redirige vers la page de connexion";
         header("Refresh: 6;url=connexion.php");
-    } else
-        {
+    } else {
         ?>
         <div class=error_message>
         <?php
-        foreach ($user->errors as $values) {
+foreach ($user->errors as $values) {
             echo $values . "<br>";
         }
         ?>

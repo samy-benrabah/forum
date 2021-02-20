@@ -95,7 +95,7 @@ class messages
         if (!$check_conv) {
             $query = $this->pdo->prepare("INSERT INTO `conversations`(`nom_conversation`, `createur_conversation`, `id_topic`) VALUES (:nom_conversation, :login, :id_topic)");
             $query->execute(["nom_conversation" => $nom_conversation, "login" => $login, "id_topic" => $id_topic]);
-            return "<p>" . "Le sujet a été ajouté" . "</p>";
+            return;
         } else {
             return "<p>" . "Il existe déjà un sujet du même nom" . "</p>";
         }

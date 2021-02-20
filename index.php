@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-require_once '../class/compteur/compteur.php';
-require_once '../class/messages.php';
-require_once '../class/admin.php';
-// require_once '../class/barre_recherche.php';
+require_once 'class/compteur/compteur.php';
+require_once 'class/messages.php';
+require_once 'class/admin.php';
+// require_once 'class/barre_recherche.php';
 $compteur = new Compteur();
 $messages = new messages();
 $articles = '';
@@ -16,21 +16,21 @@ $articles = '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/218e7c5bb4.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
 <header>
     <div class="header-first">
-        <img src="../image/logo.black.svg">
+        <img src="image/logo.black.svg">
         <h1>Dev<span class="header-span-title">.Help</span></h1>
     </div>
     <ul>
-        <li><a href="accueil.php">Accueil</a></li>
-        <li><a href="inscription.php">Inscription</a></li>
-        <li><a href="connexion.php">Connexion</a></li>
-        <li><a href="profil.php">Profil</a></li>
+        <li><a href="index.php">Accueil</a></li>
+        <li><a href="../forum/html/inscription.php">Inscription</a></li>
+        <li><a href="../forum/html/connexion.php">Connexion</a></li>
+        <li><a href="../forum/html/profil.php">Profil</a></li>
     </ul>
     <form method="get" class="header-search-box" action="affichage-topic.php">
         <input autocomplete="off" type="search" name="search" class="header-search-input" placeholder="Recherche">
@@ -63,21 +63,21 @@ if ($messages->afficherTopic() == true) {
         $messages->afficherTopicpublic();
         for ($i = 0;isset($messages->allresult_topic_public[$i]); $i++) {
             $id_topic = $messages->allresult_topic_public[$i]['id'];
-            echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_public[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
+            echo "<tr>" . "<td>" . "<a href='../forum/html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_public[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
         }
     }
     if (isset($_SESSION['status']) and $_SESSION['status'] == 'membre') {
         $messages->afficherTopicmembres();
         for ($i = 0;isset($messages->allresult_topic_membres[$i]); $i++) {
             $id_topic = $messages->allresult_topic_membres[$i]['id'];
-            echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_membres[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
+            echo "<tr>" . "<td>" . "<a href='../forum/html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic_membres[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
         }
     }
     if (isset($_SESSION['status'])) {
         if ($_SESSION['status'] == 'admin' || $_SESSION['status'] == 'mod') {
             for ($i = 0;isset($messages->allresult_topic[$i]); $i++) {
                 $id_topic = $messages->allresult_topic[$i]['id'];
-                echo "<tr>" . "<td>" . "<a href='../html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
+                echo "<tr>" . "<td>" . "<a href='../forum/html/sujet.php?id_topic=$id_topic'>" . $messages->allresult_topic[$i]['nom_topic'] . "</a>" . "</td>" . "</tr>";
             }
         }
     }

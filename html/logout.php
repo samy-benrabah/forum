@@ -1,8 +1,5 @@
 <?php
-setcookie('mail',null, time() -3600, '/');
+setcookie('mail', null, time() - 3600, '/');
 session_start();
 session_destroy();
-header('location: accueil.php');
-
-
-?>
+header('location: ../index.php');

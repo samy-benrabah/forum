@@ -21,7 +21,7 @@ $user = new user()
         <h1>Dev<span class="header-span-title">.Help</span></h1>
     </div>
     <ul>
-        <li><a href="accueil.php">Accueil</a></li>
+        <li><a href="../index.php">Accueil</a></li>
         <li><a href="profil.php">Profil</a></li>
         <li><a href="logout.php">Se déconnecter</a></li>
     </ul>
@@ -42,7 +42,7 @@ $user = new user()
     <div class="table_message">
 <table class="table_message_content">
     <?php
-if(isset($_SESSION['login'])){
+if (isset($_SESSION['login'])) {
     if ($messages->afficherMessage($_GET['id_conversation']) == true) {
         $messages->setidConversation($_GET['id_conversation']);
         for ($i = 0;isset($messages->allresult_messages[$i]); $i++) {
@@ -50,7 +50,7 @@ if(isset($_SESSION['login'])){
             $id = $messages->allresult_messages[$i]['id_utilisateur'];
             $id_message = $messages->allresult_messages[$i]['id'];
             $user->afficherProfil($id);
-            $avatar=$user->user_info[$i]['avatar'];
+            $avatar = $user->user_info[$i]['avatar'];
             echo "<tr class='tr_message'>" . "<td class='td_contenu'>" . "Par: " . "<a href='profil.php?id=$id'>" . $login . "</a>" . "<br>" . "<div class='bloc-avatar-table' alt='avatar'>" . "<img src='$avatar'>" . "</div>" . "</td>";
             echo "<td class='td_contenu'>" . $messages->allresult_messages[$i]['titre'] . "</td>";
             echo "<td class='td_message'>" . $messages->allresult_messages[$i]['message'] . "</td>";
@@ -80,7 +80,9 @@ if(isset($_SESSION['login'])){
 
         }
     }
-} else echo "<tr>" . "<td>" . "Merci de vous connecter pour visualiser les messages" . "</td>" . "</tr>"; 
+} else {
+    echo "<tr>" . "<td>" . "Merci de vous connecter pour visualiser les messages" . "</td>" . "</tr>";
+}
 
 ?>
 </table>

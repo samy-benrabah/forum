@@ -6,7 +6,7 @@ class Compteur
 
     public function __construct()
     {
-        $this->fichier = fopen("../class/compteur/compteur.txt", "r+");
+        $this->fichier = fopen("class/compteur/compteur.txt", "r+");
         $this->compteur = fgets($this->fichier);
         $this->incrementation();
     }
